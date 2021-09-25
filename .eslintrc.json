@@ -11,6 +11,11 @@
     "jsx-quotes": "off",
     "react-native/no-inline-styles": "off",
     "spaced-comment": "warn",
-    "prettier/prettier": "warn"
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
