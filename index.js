@@ -4,12 +4,19 @@ import { App } from './lib/App'
 import { BottomSheet } from './lib/Components/BottomSheet'
 import { DragAndRelease } from './lib/Components/DragAndRelease'
 import { Opacity } from './lib/Components/Opacity'
+import { NativeAnimations } from './lib/NativeAnimations'
 
 Navigation.registerComponent(
-  'Home',
+  'Reanimated',
   () => gestureHandlerRootHOC(App),
   () => App
 )
+Navigation.registerComponent(
+  'NativeAnimations',
+  () => gestureHandlerRootHOC(NativeAnimations),
+  () => NativeAnimations
+)
+
 Navigation.registerComponent(
   'BottomSheet',
   () => gestureHandlerRootHOC(BottomSheet),
@@ -46,11 +53,28 @@ Navigation.setDefaultOptions({
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot({
     root: {
-      stack: {
+      bottomTabs: {
         children: [
           {
-            component: {
-              name: 'Home',
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'Reanimated',
+                  },
+                },
+              ],
+            },
+          },
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'NativeAnimations',
+                  },
+                },
+              ],
             },
           },
         ],

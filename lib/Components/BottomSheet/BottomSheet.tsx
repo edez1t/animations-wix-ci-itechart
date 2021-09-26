@@ -27,6 +27,7 @@ export const BottomSheet: NavigationFunctionComponent = () => {
       top: withSpring(top.value, springConfig),
     }
   })
+
   const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { startTop: number }>({
     onStart(_, context) {
       context.startTop = top.value
@@ -65,7 +66,8 @@ export const BottomSheet: NavigationFunctionComponent = () => {
               right: 0,
               bottom: 0,
               backgroundColor: 'skyblue',
-              borderRadius: 20,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
             },
             style,
           ]}
