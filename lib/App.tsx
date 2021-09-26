@@ -1,10 +1,52 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View, Button } from 'react-native'
+import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 
-export const App: React.FC = () => {
+export const App: NavigationFunctionComponent = ({ componentId }) => {
   return (
-    <View>
-      <Text>Hello, World!</Text>
+    <View style={{ marginHorizontal: 8 }}>
+      <Button
+        title='bottom sheet'
+        onPress={() =>
+          Navigation.push(componentId, {
+            component: {
+              name: 'BottomSheet',
+              options: {
+                topBar: {
+                  title: {
+                    text: 'Bottom Sheet',
+                  },
+                },
+              },
+            },
+          })
+        }
+      />
+      <Button
+        title='opacity'
+        onPress={() =>
+          Navigation.push(componentId, {
+            component: {
+              name: 'Opacity',
+              options: {
+                topBar: {
+                  title: {
+                    text: 'Opacity',
+                  },
+                },
+              },
+            },
+          })
+        }
+      />
     </View>
   )
+}
+
+App.options = {
+  topBar: {
+    title: {
+      text: 'Home',
+    },
+  },
 }

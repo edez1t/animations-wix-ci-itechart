@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Button, useWindowDimensions } from 'react-native'
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'
+import { NavigationFunctionComponent } from 'react-native-navigation'
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -15,8 +16,9 @@ const springConfig = {
   stiffness: 1000,
 }
 
-export const BottomSheet: React.FC = () => {
+export const BottomSheet: NavigationFunctionComponent = () => {
   const { height: windowHeight } = useWindowDimensions()
+  const bottomSheetHeight = windowHeight / 2
 
   const top = useSharedValue(windowHeight)
 
@@ -25,12 +27,7 @@ export const BottomSheet: React.FC = () => {
       top: withSpring(top.value, springConfig),
     }
   })
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    {
-      startTop: number
-    }
-  >({
+  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { startTop: number }>({
     onStart(_, context) {
       context.startTop = top.value
     },
@@ -38,7 +35,7 @@ export const BottomSheet: React.FC = () => {
       event.translationY > 0 && (top.value = context.startTop + event.translationY)
     },
     onEnd() {
-      top.value > windowHeight / 2 + 200 ? (top.value = windowHeight) : (top.value = windowHeight / 2)
+      top.value > bottomSheetHeight + 200 ? (top.value = windowHeight) : (top.value = bottomSheetHeight)
     },
   })
 
@@ -54,7 +51,7 @@ export const BottomSheet: React.FC = () => {
         <Button
           title='open'
           onPress={() => {
-            top.value = withSpring(windowHeight / 2, springConfig)
+            top.value = withSpring(bottomSheetHeight, springConfig)
           }}
         />
       </View>
