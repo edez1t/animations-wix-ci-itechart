@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Button, Text } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { OpacityProps } from './Components/Opacity'
+import { Spinner } from './Components/Spinner'
 
 export const App: NavigationFunctionComponent = ({ componentId }) => {
   return (
@@ -35,7 +36,7 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
         <Button
           title='modal'
           onPress={() =>
-            Navigation.showModal<OpacityProps>({
+            Navigation.showModal({
               stack: {
                 children: [
                   {
@@ -50,6 +51,21 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
             })
           }
         />
+      </View>
+      <Button
+        title='Fancy Header'
+        onPress={() =>
+          Navigation.push<OpacityProps>(componentId, {
+            component: {
+              name: 'FancyStickyHeader',
+            },
+          })
+        }
+      />
+
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Text>I'm Spinner</Text>
+        <Spinner />
       </View>
     </View>
   )

@@ -11,14 +11,16 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
           Navigation.push(componentId, {
             component: {
               name: 'DragAndRelease',
-              options: {
-                topBar: {
-                  title: {
-                    text: 'Drag And Release',
-                  },
-                },
-              },
+              options: { topBar: { title: { text: 'Drag And Release' } } },
             },
+          })
+        }
+      />
+      <Button
+        title='Custom Header'
+        onPress={() =>
+          Navigation.push(componentId, {
+            component: { name: 'Header' },
           })
         }
       />
