@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Button } from 'react-native'
+import { View, Button, Text } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
+import { NativeSpinner } from './Components/Spinner'
 
 export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) => {
   return (
@@ -10,19 +11,17 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
         onPress={() => Navigation.push(componentId, { component: { name: 'DragAndRelease' } })}
       />
 
-      <Button
-        title='Custom Header'
-        onPress={() =>
-          Navigation.push(componentId, {
-            component: { name: 'Header' },
-          })
-        }
-      />
+      <Button title='Custom Header' onPress={() => Navigation.push(componentId, { component: { name: 'Header' } })} />
 
       <Button
         title='Swipeable Cards'
         onPress={() => Navigation.push(componentId, { component: { name: 'SwipeableCards' } })}
       />
+
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Text>I'm Native Spinner</Text>
+        <NativeSpinner />
+      </View>
     </View>
   )
 }

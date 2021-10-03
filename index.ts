@@ -34,8 +34,8 @@ Navigation.setDefaultOptions({
   },
   bottomTab: {
     fontWeight: 'bold',
-    textColor: 'rebeccapurple',
-    selectedTextColor: 'mediumpurple',
+    textColor: 'mediumpurple',
+    selectedTextColor: 'rebeccapurple',
   },
 })
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, Text } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { OpacityProps } from './Components/Opacity'
-import { Spinner } from './Components/Spinner'
+import { ReanimataedSpinner } from './Components/Spinner'
 
 export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
   return (
@@ -47,8 +47,8 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
       </View>
 
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Text>I'm Spinner</Text>
-        <Spinner />
+        <Text>I'm Reanimated Spinner</Text>
+        <ReanimataedSpinner />
       </View>
     </View>
   )

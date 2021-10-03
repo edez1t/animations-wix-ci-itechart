@@ -1,1 +1,2 @@
-export * from './Spinner'
+export * from './ReanimataedSpinner'
+export * from './NativeSpinner'

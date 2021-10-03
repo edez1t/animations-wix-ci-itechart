@@ -10,7 +10,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated'
 
-export const Spinner: React.FC = () => {
+export const ReanimataedSpinner: React.FC = () => {
   const animation = useSharedValue(0)
 
   const rotation = useDerivedValue(() => {
