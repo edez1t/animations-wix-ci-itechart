@@ -13,3 +13,21 @@ Morbi a facilisis mauris, in dignissim urna. Quisque auctor purus id elit conseq
 Praesent facilisis odio metus, nec blandit felis feugiat tincidunt. Suspendisse venenatis nisi vitae tortor mollis porta. Morbi pharetra quam erat, et sodales lectus scelerisque in. Pellentesque eu tortor venenatis, pharetra mi sed, feugiat quam. Sed consectetur odio accumsan erat feugiat convallis. In mollis, neque sit amet pharetra vestibulum, tortor nibh tristique risus, sit amet sodales diam magna id ipsum. Duis posuere gravida sem, id accumsan elit tristique commodo. Duis vulputate ex id erat semper, id condimentum tellus posuere.
 
 Nam metus justo, tempus porttitor euismod at, sollicitudin ac orci. Nam molestie posuere pellentesque. Pellentesque ullamcorper accumsan lectus venenatis vehicula. Ut non pretium sem. Sed consectetur, urna nec laoreet facilisis, metus ex consectetur erat, in consectetur tellus eros eu lectus. Mauris euismod leo a diam faucibus scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris euismod nunc vel magna ullamcorper porttitor. Sed aliquam leo ut mi efficitur mattis. Nulla vulputate augue sed libero sagittis luctus. Maecenas ut mi eget mi vestibulum fringilla non sed nulla. Sed cursus quam et sapien egestas, ac dapibus metus lacinia. Integer vestibulum turpis libero, sit amet finibus neque mollis non.`
+
+export const colors = [
+  '#FF6633',
+  '#FFB399',
+  '#FF33FF',
+  '#FFFF99',
+  '#00B3E6',
+  '#E6B333',
+  '#3366E6',
+  '#999966',
+  '#99FF99',
+  '#B34D4D',
+  '#80B300',
+  '#809900',
+  '#E6B3B3',
+  '#6680B3',
+  '#66991A',
+]

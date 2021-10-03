@@ -4,19 +4,12 @@ import { Navigation, NavigationFunctionComponent } from 'react-native-navigation
 import { OpacityProps } from './Components/Opacity'
 import { Spinner } from './Components/Spinner'
 
-export const App: NavigationFunctionComponent = ({ componentId }) => {
+export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
   return (
     <View style={{ marginHorizontal: 8 }}>
       <Button
         title='Bottom Sheet'
-        onPress={() => {
-          Navigation.push(componentId, {
-            component: {
-              name: 'BottomSheet',
-              options: { topBar: { title: { text: 'Bottom Sheet' } } },
-            },
-          })
-        }}
+        onPress={() => Navigation.push(componentId, { component: { name: 'BottomSheet' } })}
       />
 
       <Text style={{ alignSelf: 'center' }}>Open Opacity Animation As:</Text>
@@ -27,7 +20,7 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
             Navigation.push<OpacityProps>(componentId, {
               component: {
                 name: 'Opacity',
-                options: { topBar: { title: { text: 'Opacity' } } },
+                options: { topBar: { title: { text: 'Opacity Animation As Stack' } } },
                 passProps: { openedAs: 'stack' },
               },
             })
@@ -42,7 +35,7 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
                   {
                     component: {
                       name: 'Opacity',
-                      options: { topBar: { title: { text: 'Opacity' } } },
+                      options: { topBar: { title: { text: 'Opacity Animation As Modal' } } },
                       passProps: { openedAs: 'modal' },
                     },
                   },
@@ -52,16 +45,6 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
           }
         />
       </View>
-      <Button
-        title='Fancy Header'
-        onPress={() =>
-          Navigation.push<OpacityProps>(componentId, {
-            component: {
-              name: 'FancyStickyHeader',
-            },
-          })
-        }
-      />
 
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Text>I'm Spinner</Text>
@@ -71,13 +54,13 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
   )
 }
 
-App.options = {
+ReanimatedAnimations.options = {
   topBar: {
     title: {
-      text: 'Reanimated',
+      text: 'Reanimated Animations',
     },
   },
   bottomTab: {
-    text: 'Reanimated',
+    text: 'REANIMATED',
   },
 }

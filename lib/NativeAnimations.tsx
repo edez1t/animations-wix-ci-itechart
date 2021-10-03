@@ -7,15 +7,9 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
     <View style={{ marginHorizontal: 8 }}>
       <Button
         title='Drag And Release'
-        onPress={() =>
-          Navigation.push(componentId, {
-            component: {
-              name: 'DragAndRelease',
-              options: { topBar: { title: { text: 'Drag And Release' } } },
-            },
-          })
-        }
+        onPress={() => Navigation.push(componentId, { component: { name: 'DragAndRelease' } })}
       />
+
       <Button
         title='Custom Header'
         onPress={() =>
@@ -24,6 +18,11 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
           })
         }
       />
+
+      <Button
+        title='Swipeable Cards'
+        onPress={() => Navigation.push(componentId, { component: { name: 'SwipeableCards' } })}
+      />
     </View>
   )
 }
@@ -31,10 +30,10 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
 NativeAnimations.options = {
   topBar: {
     title: {
-      text: 'Native',
+      text: 'Native Animations',
     },
   },
   bottomTab: {
-    text: 'Native',
+    text: 'NATIVE',
   },
 }

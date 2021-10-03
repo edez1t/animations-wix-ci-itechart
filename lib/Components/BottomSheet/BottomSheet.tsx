@@ -88,3 +88,11 @@ export const BottomSheet: NavigationFunctionComponent = () => {
     </>
   )
 }
+
+BottomSheet.options = {
+  topBar: {
+    title: {
+      text: 'Bottom Sheet',
+    },
+  },
+}

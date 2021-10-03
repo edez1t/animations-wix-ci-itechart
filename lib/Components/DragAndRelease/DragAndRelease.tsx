@@ -50,3 +50,11 @@ export const DragAndRelease: NavigationFunctionComponent = () => {
     </View>
   )
 }
+
+DragAndRelease.options = {
+  topBar: {
+    title: {
+      text: 'Drag And Release',
+    },
+  },
+}

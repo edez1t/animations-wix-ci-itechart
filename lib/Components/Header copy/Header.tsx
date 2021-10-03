@@ -32,7 +32,16 @@ export const HeaderScreen: NavigationFunctionComponent = ({ componentId }) => {
         <Header componentId={componentId} />
       </Animated.View>
 
-      <ScrollView onScroll={(e) => scrollY.setValue(e.nativeEvent.contentOffset.y)}>
+      <ScrollView
+        onScroll={(e) => scrollY.setValue(e.nativeEvent.contentOffset.y)}
+        // onMomentumScrollEnd={() => {
+        //   Animated.timing(scrollY, {
+        //     toValue: 1,
+        //     duration: 1000,
+        //     useNativeDriver: true,
+        //   }).start()
+        // }}
+      >
         <Text style={{ marginTop: HEADER_HEIGHT }}>{loremIpsum}</Text>
       </ScrollView>
     </>
