@@ -8,13 +8,11 @@ import { Opacity } from './lib/Components/Opacity'
 import { SwipeableCards } from './lib/Components/SwipeableCards'
 import { NativeAnimations } from './lib/NativeAnimations'
 
-Navigation.registerComponent('Reanimated', () => gestureHandlerRootHOC(ReanimatedAnimations))
-
+Navigation.registerComponent('ReanimatedAnimations', () => gestureHandlerRootHOC(ReanimatedAnimations))
 Navigation.registerComponent('BottomSheet', () => gestureHandlerRootHOC(BottomSheet))
 Navigation.registerComponent('Opacity', () => gestureHandlerRootHOC(Opacity))
 
 Navigation.registerComponent('NativeAnimations', () => gestureHandlerRootHOC(NativeAnimations))
-
 Navigation.registerComponent('DragAndRelease', () => gestureHandlerRootHOC(DragAndRelease))
 Navigation.registerComponent('Header', () => gestureHandlerRootHOC(HeaderScreen))
 Navigation.registerComponent('SwipeableCards', () => gestureHandlerRootHOC(SwipeableCards))
@@ -34,6 +32,11 @@ Navigation.setDefaultOptions({
       color: 'mediumpurple',
     },
   },
+  bottomTab: {
+    fontWeight: 'bold',
+    textColor: 'rebeccapurple',
+    selectedTextColor: 'mediumpurple',
+  },
 })
 
 Navigation.events().registerAppLaunchedListener(async () => {
@@ -46,7 +49,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
               children: [
                 {
                   component: {
-                    name: 'Reanimated',
+                    name: 'ReanimatedAnimations',
                   },
                 },
               ],
