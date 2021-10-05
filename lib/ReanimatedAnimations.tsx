@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Button, Text } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { OpacityProps } from './Components/Opacity'
 import { ReanimataedSpinner } from './Components/Spinner'
 
 export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
+  useEffect(() => {
+    const navigationButtonEventListener = Navigation.events().registerNavigationButtonPressedListener(
+      ({ buttonId }) => {
+        if (buttonId === 'sideMenu') {
+          Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } })
+        }
+      }
+    )
+
+    return () => navigationButtonEventListener.remove()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <View style={{ marginHorizontal: 8 }}>
       <Button
@@ -50,6 +63,11 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
         <Text>I'm Reanimated Spinner</Text>
         <ReanimataedSpinner />
       </View>
+
+      <Button
+        title='Open Side Menu'
+        onPress={() => Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } })}
+      />
     </View>
   )
 }
@@ -59,6 +77,12 @@ ReanimatedAnimations.options = {
     title: {
       text: 'Reanimated Animations',
     },
+    leftButtons: [
+      {
+        id: 'sideMenu',
+        icon: require('./assets/hamburger.png'),
+      },
+    ],
   },
   bottomTab: {
     text: 'REANIMATED',

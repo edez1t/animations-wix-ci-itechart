@@ -4,7 +4,7 @@ import { NavigationFunctionComponent } from 'react-native-navigation'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 export type OpacityProps = {
-  openedAs: 'modal' | 'stack'
+  openedAs: 'modal' | 'stack' | 'side menu'
 }
 
 export const Opacity: NavigationFunctionComponent<OpacityProps> = ({ openedAs }) => {
