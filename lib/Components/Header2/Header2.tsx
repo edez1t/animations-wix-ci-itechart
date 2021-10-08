@@ -210,7 +210,7 @@ const Slider: React.FC<{
         style={{ flex: 1 }}
         step={1}
         value={value}
-        onValueChange={(value) => onValueChange(value)}
+        onValueChange={(val) => onValueChange(val)}
         minimumValue={boundaries[0]}
         maximumValue={boundaries[1]}
         minimumTrackTintColor='red'
