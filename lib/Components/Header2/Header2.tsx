@@ -1,21 +1,22 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Animated, View, Text, ScrollView, TouchableOpacity, Image, ImageBackground, StyleSheet } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { loremIpsum } from '../../mockData'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-
-const BACK_BUTTON_SIZE = 35
-const SPACING = 15
-const HEADER_MAX_HEIGHT = 200
-const HEADER_MIN_HEIGHT = getStatusBarHeight() + BACK_BUTTON_SIZE + SPACING
-const PROFILE_IMAGE_MAX_SIZE = 90
-const PROFILE_IMAGE_MIN_SIZE = 40
-const PROFILE_IMAGE_SAFE_SPACING = PROFILE_IMAGE_MIN_SIZE / 4
-const PROFILE_NAME_FONT_SIZE = 26
+import ComunitySlider from '@react-native-community/slider'
 
 const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground)
 
 export const Header2: NavigationFunctionComponent = ({ componentId }) => {
+  const [BACK_BUTTON_SIZE, set_BACK_BUTTON_SIZE] = useState(35)
+  const [SPACING, set_SPACING] = useState(15)
+  const [HEADER_MAX_HEIGHT, set_HEADER_MAX_HEIGHT] = useState(200)
+  const HEADER_MIN_HEIGHT = getStatusBarHeight() + BACK_BUTTON_SIZE + SPACING
+  const [PROFILE_IMAGE_MAX_SIZE, set_PROFILE_IMAGE_MAX_SIZE] = useState(90)
+  const [PROFILE_IMAGE_MIN_SIZE, set_PROFILE_IMAGE_MIN_SIZE] = useState(40)
+  const PROFILE_IMAGE_SAFE_SPACING = HEADER_MIN_HEIGHT / 5
+  const PROFILE_NAME_FONT_SIZE = 26
+
   const scrollY = useRef(new Animated.Value(0)).current
 
   const headerHeight = scrollY.interpolate({
@@ -65,6 +66,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* Header */}
       <Animated.View
         style={{
           position: 'absolute',
@@ -93,7 +95,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
               fontWeight: 'bold',
               fontSize: PROFILE_NAME_FONT_SIZE,
               color: 'white',
-              marginTop: getStatusBarHeight(),
+              marginBottom: -getStatusBarHeight(), // not marginTop: getStatusBarHeight() !!!
               opacity: headerTitleOpacity,
             }}
           >
@@ -132,31 +134,58 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
           Lil Peep
         </Animated.Text>
 
+        {/* DO IGNORE THE SECTION BELOW, IT JUST CHANGES VALUES */}
+        <Slider value={BACK_BUTTON_SIZE} boundaries={[25, 60]} onValueChange={(value) => set_BACK_BUTTON_SIZE(value)}>
+          BACK_BUTTON_SIZE: {BACK_BUTTON_SIZE}
+        </Slider>
+        <Slider value={SPACING} boundaries={[0, 25]} onValueChange={(value) => set_SPACING(value)}>
+          SPACING: {SPACING}
+        </Slider>
+        <Slider
+          value={HEADER_MAX_HEIGHT}
+          boundaries={[120, 300]}
+          onValueChange={(value) => set_HEADER_MAX_HEIGHT(value)}
+        >
+          HEADER_MAX_HEIGHT: {HEADER_MAX_HEIGHT}
+        </Slider>
+        <Slider
+          value={PROFILE_IMAGE_MAX_SIZE}
+          boundaries={[60, 150]}
+          onValueChange={(value) => set_PROFILE_IMAGE_MAX_SIZE(value)}
+        >
+          PROFILE_IMAGE_MAX_SIZE: {PROFILE_IMAGE_MAX_SIZE}
+        </Slider>
+        <Slider
+          value={PROFILE_IMAGE_MIN_SIZE}
+          boundaries={[20, 50]}
+          onValueChange={(value) => set_PROFILE_IMAGE_MIN_SIZE(value)}
+        >
+          PROFILE_IMAGE_MIN_SIZE: {PROFILE_IMAGE_MIN_SIZE}
+        </Slider>
+        {/* DO IGNORE THE SECTION ABOVE, IT JUST CHANGES VALUES */}
+
         <Text style={{ marginTop: SPACING }}>{loremIpsum}</Text>
       </ScrollView>
 
-      <BackButton onPress={() => Navigation.pop(componentId)} />
+      {/* Back Button */}
+      <TouchableOpacity
+        onPress={() => Navigation.pop(componentId)}
+        style={{
+          position: 'absolute',
+          zIndex: 2,
+          top: HEADER_MIN_HEIGHT - BACK_BUTTON_SIZE - SPACING / 2,
+          left: SPACING / 2,
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          width: BACK_BUTTON_SIZE,
+          height: BACK_BUTTON_SIZE,
+          borderRadius: BACK_BUTTON_SIZE / 2,
+        }}
+      >
+        <Image source={require('../../assets/arrow-back.png')} style={{ flex: 1, width: null, height: null }} />
+      </TouchableOpacity>
     </View>
   )
 }
-
-const BackButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={{
-      position: 'absolute',
-      zIndex: 2,
-      top: HEADER_MIN_HEIGHT - BACK_BUTTON_SIZE - SPACING / 2,
-      left: SPACING / 2,
-      backgroundColor: 'rgba(0, 0, 0, 0.2)',
-      width: BACK_BUTTON_SIZE,
-      height: BACK_BUTTON_SIZE,
-      borderRadius: BACK_BUTTON_SIZE / 2,
-    }}
-  >
-    <Image source={require('../../assets/arrow-back.png')} style={{ flex: 1, width: null, height: null }} />
-  </TouchableOpacity>
-)
 
 Header2.options = {
   statusBar: {
@@ -167,4 +196,27 @@ Header2.options = {
   topBar: {
     visible: false,
   },
+}
+
+const Slider: React.FC<{
+  value: number
+  boundaries: number[]
+  onValueChange: (value: number) => void
+}> = ({ value, boundaries, onValueChange, children }) => {
+  return (
+    <>
+      <Text style={{ textAlign: 'center' }}>{children}</Text>
+      <ComunitySlider
+        style={{ flex: 1 }}
+        step={1}
+        value={value}
+        onValueChange={(value) => onValueChange(value)}
+        minimumValue={boundaries[0]}
+        maximumValue={boundaries[1]}
+        minimumTrackTintColor='red'
+        maximumTrackTintColor='red'
+        thumbTintColor='black'
+      />
+    </>
+  )
 }
