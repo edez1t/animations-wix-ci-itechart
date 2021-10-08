@@ -7,11 +7,8 @@ import { ReanimataedSpinner } from './Components/Spinner'
 export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
   useEffect(() => {
     const navigationButtonEventListener = Navigation.events().registerNavigationButtonPressedListener(
-      ({ buttonId }) => {
-        if (buttonId === 'sideMenu') {
-          Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } })
-        }
-      }
+      ({ buttonId }) =>
+        buttonId === 'sideMenu' && Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } })
     )
 
     return () => navigationButtonEventListener.remove()
@@ -19,49 +16,57 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
   }, [])
 
   return (
-    <View style={{ marginHorizontal: 8 }}>
-      <Button
-        title='Bottom Sheet'
-        onPress={() => Navigation.push(componentId, { component: { name: 'BottomSheet' } })}
-      />
-
-      <Text style={{ alignSelf: 'center' }}>Open Opacity Animation As:</Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+    <View style={{ padding: 10, justifyContent: 'space-between', flex: 1 }}>
+      <View>
         <Button
-          title='stack'
-          onPress={() =>
-            Navigation.push<OpacityProps>(componentId, {
-              component: {
-                name: 'Opacity',
-                options: { topBar: { title: { text: 'Opacity Animation As Stack' } } },
-                passProps: { openedAs: 'stack' },
-              },
-            })
-          }
+          title='Bottom Sheet'
+          onPress={() => Navigation.push(componentId, { component: { name: 'BottomSheet' } })}
         />
-        <Button
-          title='modal'
-          onPress={() =>
-            Navigation.showModal({
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'Opacity',
-                      options: { topBar: { title: { text: 'Opacity Animation As Modal' } } },
-                      passProps: { openedAs: 'modal' },
+
+        <Text style={{ alignSelf: 'center' }}>Open Opacity Animation As:</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <Button
+            title='stack'
+            onPress={() =>
+              Navigation.push<OpacityProps>(componentId, {
+                component: {
+                  name: 'Opacity',
+                  options: { topBar: { title: { text: 'Opacity Animation As Stack' } } },
+                  passProps: { openedAs: 'stack' },
+                },
+              })
+            }
+          />
+          <Button
+            title='modal'
+            onPress={() =>
+              Navigation.showModal({
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: 'Opacity',
+                        options: {
+                          topBar: {
+                            title: { text: 'Hardware Back Is Disabled. Use ➡' },
+                            rightButtons: [{ id: 'dismiss', icon: require('./assets/close.png') }],
+                          },
+                          hardwareBackButton: { dismissModalOnPress: false },
+                        },
+                        passProps: { openedAs: 'modal' },
+                      },
                     },
-                  },
-                ],
-              },
-            })
-          }
-        />
-      </View>
+                  ],
+                },
+              })
+            }
+          />
+        </View>
 
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Text>I'm Reanimated Spinner</Text>
-        <ReanimataedSpinner />
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>I'm Reanimated Spinner</Text>
+          <ReanimataedSpinner />
+        </View>
       </View>
 
       <Button

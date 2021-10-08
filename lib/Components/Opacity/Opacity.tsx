@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native'
-import { NavigationFunctionComponent } from 'react-native-navigation'
+import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 export type OpacityProps = {
   openedAs: 'modal' | 'stack' | 'side menu'
 }
 
-export const Opacity: NavigationFunctionComponent<OpacityProps> = ({ openedAs }) => {
+export const Opacity: NavigationFunctionComponent<OpacityProps> = ({ openedAs, componentId }) => {
+  useEffect(() => {
+    const navigationButtonEventListener = Navigation.events().registerNavigationButtonPressedListener(
+      ({ buttonId }) => buttonId === 'dismiss' && Navigation.dismissModal(componentId)
+    )
+
+    return () => navigationButtonEventListener.remove()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const animation = useSharedValue(1)
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: withTiming(animation.value, { duration: 1000 }, () => {

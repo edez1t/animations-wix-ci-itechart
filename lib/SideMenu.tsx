@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { OpacityProps } from './Components/Opacity'
-import { SCREENS } from './Screens'
+import { SCREENS } from './screens'
 
 export const SideMenu: NavigationFunctionComponent = ({ componentId }) => {
   return (
