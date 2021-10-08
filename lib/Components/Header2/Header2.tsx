@@ -200,7 +200,7 @@ Header2.options = {
 
 const Slider: React.FC<{
   value: number
-  boundaries: number[]
+  boundaries: [number, number]
   onValueChange: (value: number) => void
 }> = ({ value, boundaries, onValueChange, children }) => {
   return (

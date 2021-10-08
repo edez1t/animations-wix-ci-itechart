@@ -79,17 +79,9 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
 
 ReanimatedAnimations.options = {
   topBar: {
-    title: {
-      text: 'Reanimated Animations',
-    },
-    leftButtons: [
-      {
-        id: 'sideMenu',
-        icon: require('./assets/hamburger.png'),
-      },
-    ],
+    title: { text: 'Reanimated Animations' },
+    leftButtons: [{ id: 'sideMenu', icon: require('./assets/hamburger.png') }],
   },
-  bottomTab: {
-    text: 'REANIMATED',
-  },
+  bottomTab: { text: 'REANIMATED' },
+  sideMenu: { left: { enabled: true } },
 }

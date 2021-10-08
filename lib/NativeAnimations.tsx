@@ -18,7 +18,7 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
         onPress={() => Navigation.push(componentId, { component: { name: 'SwipeableCards' } })}
       />
 
-      <Button title='Header2' onPress={() => Navigation.push(componentId, { component: { name: 'Header2' } })} />
+      <Button title='Fancy Header' onPress={() => Navigation.push(componentId, { component: { name: 'Header2' } })} />
 
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Text>I'm Native Spinner</Text>

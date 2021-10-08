@@ -46,16 +46,12 @@ Navigation.setDefaultOptions({
     textColor: 'mediumpurple',
     selectedTextColor: 'rebeccapurple',
   },
-  sideMenu: {
-    left: {
-      enabled: false,
-    },
-  },
 })
 
 Navigation.setRoot({
   root: {
     sideMenu: {
+      options: { sideMenu: { left: { enabled: false } } },
       left: {
         component: {
           name: 'SideMenu',
