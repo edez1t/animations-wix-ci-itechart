@@ -82,7 +82,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
             ...StyleSheet.absoluteFillObject,
             position: 'absolute',
             alignItems: 'center',
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
             borderBottomLeftRadius: headerBorderRadius,
             borderBottomRightRadius: headerBorderRadius,
             overflow: 'hidden',
@@ -93,7 +93,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
               fontWeight: 'bold',
               fontSize: PROFILE_NAME_FONT_SIZE,
               color: 'white',
-              marginBottom: SPACING / 2,
+              marginTop: getStatusBarHeight(),
               opacity: headerTitleOpacity,
             }}
           >
