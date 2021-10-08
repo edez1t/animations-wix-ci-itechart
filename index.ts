@@ -46,6 +46,11 @@ Navigation.setDefaultOptions({
     textColor: 'mediumpurple',
     selectedTextColor: 'rebeccapurple',
   },
+  sideMenu: {
+    left: {
+      enabled: false,
+    },
+  },
 })
 
 Navigation.setRoot({

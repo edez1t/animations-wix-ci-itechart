@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from 'react'
-import { Animated, Easing, View } from 'react-native'
+import { Animated, Easing } from 'react-native'
 
 export const NativeSpinner: React.FC = () => {
   const rotation = useRef(new Animated.Value(0)).current
+
+  const color = rotation.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: ['#00B3E6', '#FF33FF', '#00B3E6'],
+  })
 
   const startAnimation = () => {
     Animated.loop(
@@ -10,7 +15,7 @@ export const NativeSpinner: React.FC = () => {
         toValue: 1,
         duration: 1200,
         easing: Easing.linear,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }),
       {
         iterations: -1,
@@ -49,12 +54,12 @@ export const NativeSpinner: React.FC = () => {
         style,
       ]}
     >
-      <View
+      <Animated.View
         style={{
           width: '20%',
           height: '100%',
-          backgroundColor: 'black',
           borderRadius: 50,
+          backgroundColor: color,
         }}
       />
     </Animated.View>

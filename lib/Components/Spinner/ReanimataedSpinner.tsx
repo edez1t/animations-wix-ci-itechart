@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { View } from 'react-native'
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -8,6 +7,7 @@ import Animated, {
   useDerivedValue,
   interpolate,
   Easing,
+  interpolateColor,
 } from 'react-native-reanimated'
 
 export const ReanimataedSpinner: React.FC = () => {
@@ -17,9 +17,19 @@ export const ReanimataedSpinner: React.FC = () => {
     return interpolate(animation.value, [0, 1], [0, 360])
   })
 
-  const animatedStyle = useAnimatedStyle(() => {
+  const animatedRotation = useAnimatedStyle(() => {
     return {
       transform: [{ rotate: rotation.value + 'deg' }],
+    }
+  })
+
+  const color = useDerivedValue(() => {
+    return interpolateColor(animation.value, [0, 0.5, 1], ['#00B3E6', '#FF33FF', '#00B3E6'])
+  })
+
+  const animatedColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: color.value,
     }
   })
 
@@ -48,16 +58,18 @@ export const ReanimataedSpinner: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
         },
-        animatedStyle,
+        animatedRotation,
       ]}
     >
-      <View
-        style={{
-          width: '20%',
-          height: '100%',
-          backgroundColor: 'black',
-          borderRadius: 50,
-        }}
+      <Animated.View
+        style={[
+          {
+            width: '20%',
+            height: '100%',
+            borderRadius: 50,
+          },
+          animatedColor,
+        ]}
       />
     </Animated.View>
   )

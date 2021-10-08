@@ -2,12 +2,15 @@ import React, { useRef } from 'react'
 import { Animated, View, Text, ScrollView, TouchableOpacity, Image, ImageBackground, StyleSheet } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { loremIpsum } from '../../mockData'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-const HEADER_MAX_HEIGHT = 150
-const HEADER_MIN_HEIGHT = 70
+const BACK_BUTTON_SIZE = 35
+const SPACING = 15
+const HEADER_MAX_HEIGHT = 200
+const HEADER_MIN_HEIGHT = getStatusBarHeight() + BACK_BUTTON_SIZE + SPACING
 const PROFILE_IMAGE_MAX_SIZE = 90
 const PROFILE_IMAGE_MIN_SIZE = 40
-const PROFILE_IMAGE_SAFE_MARGIN = PROFILE_IMAGE_MIN_SIZE / 4
+const PROFILE_IMAGE_SAFE_SPACING = PROFILE_IMAGE_MIN_SIZE / 4
 const PROFILE_NAME_FONT_SIZE = 26
 
 const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground)
@@ -27,7 +30,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   })
   const profileImageMarginTop = scrollY.interpolate({
     inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-    outputRange: [HEADER_MAX_HEIGHT - PROFILE_IMAGE_MAX_SIZE / 2, HEADER_MAX_HEIGHT + PROFILE_IMAGE_SAFE_MARGIN],
+    outputRange: [HEADER_MAX_HEIGHT - PROFILE_IMAGE_MAX_SIZE / 2, HEADER_MAX_HEIGHT + PROFILE_IMAGE_SAFE_SPACING],
     extrapolate: 'clamp',
   })
   const headerZindex = scrollY.interpolate({
@@ -37,24 +40,24 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   })
   const headerTitleOpacity = scrollY.interpolate({
     inputRange: [
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MIN_SIZE + PROFILE_IMAGE_SAFE_MARGIN,
+      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MIN_SIZE + PROFILE_IMAGE_SAFE_SPACING,
       HEADER_MAX_HEIGHT -
         HEADER_MIN_HEIGHT +
         PROFILE_IMAGE_MIN_SIZE +
         PROFILE_NAME_FONT_SIZE +
-        PROFILE_IMAGE_SAFE_MARGIN,
+        PROFILE_IMAGE_SAFE_SPACING,
     ],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
   const headerBorderRadius = scrollY.interpolate({
     inputRange: [
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MIN_SIZE + PROFILE_IMAGE_SAFE_MARGIN,
+      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MIN_SIZE + PROFILE_IMAGE_SAFE_SPACING,
       HEADER_MAX_HEIGHT -
         HEADER_MIN_HEIGHT +
         PROFILE_IMAGE_MIN_SIZE +
         PROFILE_NAME_FONT_SIZE +
-        PROFILE_IMAGE_SAFE_MARGIN,
+        PROFILE_IMAGE_SAFE_SPACING,
     ],
     outputRange: [15, 0],
     extrapolate: 'clamp',
@@ -89,8 +92,8 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
             style={{
               fontWeight: 'bold',
               fontSize: PROFILE_NAME_FONT_SIZE,
-              marginLeft: 10,
               color: 'white',
+              marginBottom: SPACING / 2,
               opacity: headerTitleOpacity,
             }}
           >
@@ -101,7 +104,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
 
       <ScrollView
         scrollEventThrottle={16}
-        contentContainerStyle={{ marginHorizontal: 15, borderRadius: 20, overflow: 'hidden' }}
+        contentContainerStyle={{ marginHorizontal: SPACING }}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: false })}
         overScrollMode='never'
         showsVerticalScrollIndicator={false}
@@ -129,7 +132,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
           Lil Peep
         </Animated.Text>
 
-        <Text style={{ marginTop: 15 }}>{loremIpsum}</Text>
+        <Text style={{ marginTop: SPACING }}>{loremIpsum}</Text>
       </ScrollView>
 
       <BackButton onPress={() => Navigation.pop(componentId)} />
@@ -142,16 +145,16 @@ const BackButton: React.FC<{ onPress: () => void }> = ({ onPress }) => (
     onPress={onPress}
     style={{
       position: 'absolute',
-      right: 10,
-      bottom: 10,
+      zIndex: 2,
+      top: HEADER_MIN_HEIGHT - BACK_BUTTON_SIZE - SPACING / 2,
+      left: SPACING / 2,
       backgroundColor: 'rgba(0, 0, 0, 0.2)',
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      justifyContent: 'center',
+      width: BACK_BUTTON_SIZE,
+      height: BACK_BUTTON_SIZE,
+      borderRadius: BACK_BUTTON_SIZE / 2,
     }}
   >
-    <Image source={require('../../assets/arrow-back.png')} style={{ marginLeft: 3, width: 40, height: 40 }} />
+    <Image source={require('../../assets/arrow-back.png')} style={{ flex: 1, width: null, height: null }} />
   </TouchableOpacity>
 )
 
