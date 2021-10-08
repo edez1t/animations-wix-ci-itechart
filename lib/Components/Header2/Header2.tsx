@@ -80,7 +80,8 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
             position: 'absolute',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            borderRadius: headerBorderRadius,
+            borderBottomLeftRadius: headerBorderRadius,
+            borderBottomRightRadius: headerBorderRadius,
             overflow: 'hidden',
           }}
         >
