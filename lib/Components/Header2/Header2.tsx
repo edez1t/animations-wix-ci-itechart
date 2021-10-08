@@ -27,10 +27,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   })
   const profileImageMarginTop = scrollY.interpolate({
     inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-    outputRange: [
-      HEADER_MAX_HEIGHT - (PROFILE_IMAGE_MAX_SIZE - PROFILE_IMAGE_MIN_SIZE),
-      HEADER_MAX_HEIGHT + PROFILE_IMAGE_SAFE_MARGIN,
-    ],
+    outputRange: [HEADER_MAX_HEIGHT - PROFILE_IMAGE_MAX_SIZE / 2, HEADER_MAX_HEIGHT + PROFILE_IMAGE_SAFE_MARGIN],
     extrapolate: 'clamp',
   })
   const headerZindex = scrollY.interpolate({
