@@ -193,9 +193,7 @@ Header2.options = {
     style: 'light',
     drawBehind: true,
   },
-  topBar: {
-    visible: false,
-  },
+  topBar: { visible: false },
 }
 
 const Slider: React.FC<{

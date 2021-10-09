@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { View, Button, Text } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { OpacityProps } from './Components/Opacity'
+import { Spacer } from './Components/Spacer'
 import { ReanimataedSpinner } from './Components/Spinner'
 
 export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
@@ -16,14 +17,19 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
   }, [])
 
   return (
-    <View style={{ padding: 10, justifyContent: 'space-between', flex: 1 }}>
+    <View style={{ flex: 1, justifyContent: 'space-between', padding: 10 }}>
       <View>
         <Button
           title='Bottom Sheet'
           onPress={() => Navigation.push(componentId, { component: { name: 'BottomSheet' } })}
         />
 
+        <Spacer />
+
         <Text style={{ alignSelf: 'center' }}>Open Opacity Animation As:</Text>
+
+        <Spacer />
+
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
           <Button
             title='stack'
@@ -63,8 +69,13 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
           />
         </View>
 
+        <Spacer />
+
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Text>I'm Reanimated Spinner</Text>
+
+          <Spacer />
+
           <ReanimataedSpinner />
         </View>
       </View>

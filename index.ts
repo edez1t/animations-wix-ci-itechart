@@ -24,39 +24,21 @@ Navigation.registerComponent('Header2', () => gestureHandlerRootHOC(Header2))
 Navigation.registerComponent('SideMenu', () => gestureHandlerRootHOC(SideMenu))
 
 Navigation.setDefaultOptions({
-  layout: {
-    orientation: ['portrait'],
-  },
-  statusBar: {
-    backgroundColor: 'rebeccapurple',
-  },
+  layout: { orientation: ['portrait'] },
+  statusBar: { backgroundColor: 'rebeccapurple' },
   topBar: {
-    title: {
-      color: 'white',
-    },
-    backButton: {
-      color: 'white',
-    },
-    background: {
-      color: 'mediumpurple',
-    },
+    title: { color: 'white' },
+    backButton: { color: 'white' },
+    background: { color: 'mediumpurple' },
   },
-  bottomTab: {
-    fontWeight: 'bold',
-    textColor: 'mediumpurple',
-    selectedTextColor: 'rebeccapurple',
-  },
+  bottomTab: { fontWeight: 'bold', textColor: 'mediumpurple', selectedTextColor: 'rebeccapurple' },
 })
 
 Navigation.setRoot({
   root: {
     sideMenu: {
       options: { sideMenu: { left: { enabled: false } } },
-      left: {
-        component: {
-          name: 'SideMenu',
-        },
-      },
+      left: { component: { name: 'SideMenu' } },
       center: {
         bottomTabs: {
           children: [
@@ -64,10 +46,7 @@ Navigation.setRoot({
               stack: {
                 children: [
                   {
-                    component: {
-                      id: SCREENS.ReanimatedAnimations,
-                      name: 'ReanimatedAnimations',
-                    },
+                    component: { id: SCREENS.ReanimatedAnimations, name: 'ReanimatedAnimations' },
                   },
                 ],
               },
@@ -76,9 +55,7 @@ Navigation.setRoot({
               stack: {
                 children: [
                   {
-                    component: {
-                      name: 'NativeAnimations',
-                    },
+                    component: { name: 'NativeAnimations' },
                   },
                 ],
               },
