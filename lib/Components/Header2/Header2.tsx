@@ -8,55 +8,48 @@ import ComunitySlider from '@react-native-community/slider'
 export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   const [BACK_BUTTON_SIZE, set_BACK_BUTTON_SIZE] = useState(35)
   const [SPACING, set_SPACING] = useState(15)
-  const [HEADER_MAX_HEIGHT, set_HEADER_MAX_HEIGHT] = useState(200)
-  const HEADER_MIN_HEIGHT = getStatusBarHeight() + BACK_BUTTON_SIZE + SPACING
-  const [PROFILE_IMAGE_MAX_SIZE, set_PROFILE_IMAGE_MAX_SIZE] = useState(90)
-  const [PROFILE_IMAGE_MIN_SIZE, set_PROFILE_IMAGE_MIN_SIZE] = useState(40)
-  const PROFILE_IMAGE_SAFE_SPACING = HEADER_MIN_HEIGHT / 4
+  const [HEADER_MAX, set_HEADER_MAX] = useState(200)
+  const HEADER_MIN = getStatusBarHeight() + BACK_BUTTON_SIZE + SPACING
+  const HEADER_DIFF = HEADER_MAX - HEADER_MIN
+  const [PROFILE_IMAGE_MAX, set_PROFILE_IMAGE_MAX] = useState(90)
+  const [PROFILE_IMAGE_MIN, set_PROFILE_IMAGE_MIN] = useState(40)
+  const PROFILE_IMAGE_SAFE_SPACING = HEADER_MIN / 4
   const PROFILE_NAME_FONT_SIZE = 26
 
   const scrollY = useRef(new Animated.Value(0)).current
 
   const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+    inputRange: [0, HEADER_DIFF],
+    outputRange: [HEADER_MAX, HEADER_MIN],
     extrapolate: 'clamp',
   })
   const profileImageSize = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-    outputRange: [PROFILE_IMAGE_MAX_SIZE, PROFILE_IMAGE_MIN_SIZE],
+    inputRange: [0, HEADER_DIFF],
+    outputRange: [PROFILE_IMAGE_MAX, PROFILE_IMAGE_MIN],
     extrapolate: 'clamp',
   })
   const profileImageMarginTop = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-    outputRange: [HEADER_MAX_HEIGHT - PROFILE_IMAGE_MAX_SIZE / 2, HEADER_MAX_HEIGHT + PROFILE_IMAGE_SAFE_SPACING],
+    inputRange: [0, HEADER_DIFF],
+    outputRange: [HEADER_MAX - PROFILE_IMAGE_MAX / 2, HEADER_MAX + PROFILE_IMAGE_SAFE_SPACING],
     extrapolate: 'clamp',
   })
   const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + (PROFILE_IMAGE_MAX_SIZE + PROFILE_IMAGE_MIN_SIZE) / 2],
+    inputRange: [0, HEADER_DIFF + (PROFILE_IMAGE_MAX + PROFILE_IMAGE_MIN) / 2],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
   const headerTitleOpacity = scrollY.interpolate({
     inputRange: [
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MIN_SIZE + PROFILE_IMAGE_SAFE_SPACING,
-      HEADER_MAX_HEIGHT -
-        HEADER_MIN_HEIGHT +
-        PROFILE_IMAGE_MIN_SIZE +
-        PROFILE_NAME_FONT_SIZE +
-        PROFILE_IMAGE_SAFE_SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_IMAGE_SAFE_SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + PROFILE_IMAGE_SAFE_SPACING,
     ],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
   const headerBorderRadius = scrollY.interpolate({
     inputRange: [
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MIN_SIZE + PROFILE_IMAGE_SAFE_SPACING,
-      HEADER_MAX_HEIGHT -
-        HEADER_MIN_HEIGHT +
-        PROFILE_IMAGE_MIN_SIZE +
-        PROFILE_NAME_FONT_SIZE +
-        PROFILE_IMAGE_SAFE_SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_IMAGE_SAFE_SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + PROFILE_IMAGE_SAFE_SPACING,
     ],
     outputRange: [15, 0],
     extrapolate: 'clamp',
@@ -107,7 +100,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
           style={{
             width: profileImageSize,
             height: profileImageSize,
-            borderRadius: PROFILE_IMAGE_MAX_SIZE / 2,
+            borderRadius: PROFILE_IMAGE_MAX / 2,
             borderWidth: 1,
             overflow: 'hidden',
             marginTop: profileImageMarginTop,
@@ -132,26 +125,18 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         <Slider value={SPACING} boundaries={[0, 25]} onValueChange={(value) => set_SPACING(value)}>
           SPACING: {SPACING}
         </Slider>
-        <Slider
-          value={HEADER_MAX_HEIGHT}
-          boundaries={[150, 300]}
-          onValueChange={(value) => set_HEADER_MAX_HEIGHT(value)}
-        >
-          HEADER_MAX_HEIGHT: {HEADER_MAX_HEIGHT}
+        <Slider value={HEADER_MAX} boundaries={[150, 300]} onValueChange={(value) => set_HEADER_MAX(value)}>
+          HEADER_MAX: {HEADER_MAX}
         </Slider>
         <Slider
-          value={PROFILE_IMAGE_MAX_SIZE}
+          value={PROFILE_IMAGE_MAX}
           boundaries={[60, 150]}
-          onValueChange={(value) => set_PROFILE_IMAGE_MAX_SIZE(value)}
+          onValueChange={(value) => set_PROFILE_IMAGE_MAX(value)}
         >
-          PROFILE_IMAGE_MAX_SIZE: {PROFILE_IMAGE_MAX_SIZE}
+          PROFILE_IMAGE_MAX: {PROFILE_IMAGE_MAX}
         </Slider>
-        <Slider
-          value={PROFILE_IMAGE_MIN_SIZE}
-          boundaries={[20, 50]}
-          onValueChange={(value) => set_PROFILE_IMAGE_MIN_SIZE(value)}
-        >
-          PROFILE_IMAGE_MIN_SIZE: {PROFILE_IMAGE_MIN_SIZE}
+        <Slider value={PROFILE_IMAGE_MIN} boundaries={[20, 50]} onValueChange={(value) => set_PROFILE_IMAGE_MIN(value)}>
+          PROFILE_IMAGE_MIN: {PROFILE_IMAGE_MIN}
         </Slider>
         {/* DO IGNORE THE SECTION ABOVE, IT JUST CHANGES VALUES */}
 
@@ -164,7 +149,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         style={{
           position: 'absolute',
           zIndex: 2,
-          top: HEADER_MIN_HEIGHT - BACK_BUTTON_SIZE - SPACING / 2,
+          top: HEADER_MIN - BACK_BUTTON_SIZE - SPACING / 2,
           left: SPACING / 2,
           backgroundColor: 'rgba(0, 0, 0, 0.2)',
           width: BACK_BUTTON_SIZE,
