@@ -13,7 +13,6 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   const HEADER_DIFF = HEADER_MAX - HEADER_MIN
   const [PROFILE_IMAGE_MAX, set_PROFILE_IMAGE_MAX] = useState(90)
   const [PROFILE_IMAGE_MIN, set_PROFILE_IMAGE_MIN] = useState(40)
-  const PROFILE_IMAGE_SAFE_SPACING = HEADER_MIN / 4
   const PROFILE_NAME_FONT_SIZE = 26
 
   const scrollY = useRef(new Animated.Value(0)).current
@@ -30,26 +29,26 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   })
   const profileImageMarginTop = scrollY.interpolate({
     inputRange: [0, HEADER_DIFF],
-    outputRange: [HEADER_MAX - PROFILE_IMAGE_MAX / 2, HEADER_MAX + PROFILE_IMAGE_SAFE_SPACING],
+    outputRange: [HEADER_MAX - PROFILE_IMAGE_MAX / 2, HEADER_MAX + SPACING],
     extrapolate: 'clamp',
   })
   const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_DIFF + (PROFILE_IMAGE_MAX + PROFILE_IMAGE_MIN) / 2],
+    inputRange: [HEADER_DIFF, HEADER_DIFF + 0.1],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
   const headerTitleOpacity = scrollY.interpolate({
     inputRange: [
-      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_IMAGE_SAFE_SPACING,
-      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + PROFILE_IMAGE_SAFE_SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + SPACING,
     ],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
   const headerBorderRadius = scrollY.interpolate({
     inputRange: [
-      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_IMAGE_SAFE_SPACING,
-      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + PROFILE_IMAGE_SAFE_SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + SPACING,
+      HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + SPACING,
     ],
     outputRange: [15, 0],
     extrapolate: 'clamp',
@@ -125,12 +124,12 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         <Slider value={SPACING} boundaries={[0, 25]} onValueChange={(value) => set_SPACING(value)}>
           SPACING: {SPACING}
         </Slider>
-        <Slider value={HEADER_MAX} boundaries={[150, 300]} onValueChange={(value) => set_HEADER_MAX(value)}>
+        <Slider value={HEADER_MAX} boundaries={[160, 300]} onValueChange={(value) => set_HEADER_MAX(value)}>
           HEADER_MAX: {HEADER_MAX}
         </Slider>
         <Slider
           value={PROFILE_IMAGE_MAX}
-          boundaries={[60, 150]}
+          boundaries={[60, 140]}
           onValueChange={(value) => set_PROFILE_IMAGE_MAX(value)}
         >
           PROFILE_IMAGE_MAX: {PROFILE_IMAGE_MAX}
