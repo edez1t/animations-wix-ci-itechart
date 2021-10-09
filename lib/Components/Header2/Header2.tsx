@@ -5,8 +5,6 @@ import { loremIpsum } from '../../mockData'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import ComunitySlider from '@react-native-community/slider'
 
-const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground)
-
 export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   const [BACK_BUTTON_SIZE, set_BACK_BUTTON_SIZE] = useState(35)
   const [SPACING, set_SPACING] = useState(15)
@@ -14,7 +12,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   const HEADER_MIN_HEIGHT = getStatusBarHeight() + BACK_BUTTON_SIZE + SPACING
   const [PROFILE_IMAGE_MAX_SIZE, set_PROFILE_IMAGE_MAX_SIZE] = useState(90)
   const [PROFILE_IMAGE_MIN_SIZE, set_PROFILE_IMAGE_MIN_SIZE] = useState(40)
-  const PROFILE_IMAGE_SAFE_SPACING = HEADER_MIN_HEIGHT / 5
+  const PROFILE_IMAGE_SAFE_SPACING = HEADER_MIN_HEIGHT / 4
   const PROFILE_NAME_FONT_SIZE = 26
 
   const scrollY = useRef(new Animated.Value(0)).current
@@ -35,7 +33,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
     extrapolate: 'clamp',
   })
   const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + PROFILE_IMAGE_MAX_SIZE],
+    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + (PROFILE_IMAGE_MAX_SIZE + PROFILE_IMAGE_MIN_SIZE) / 2],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
@@ -69,31 +67,24 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
       {/* Header */}
       <Animated.View
         style={{
+          ...StyleSheet.absoluteFillObject,
           position: 'absolute',
-          top: 0,
-          right: 0,
-          left: 0,
-          height: headerHeight,
           zIndex: headerZindex,
+          height: headerHeight,
           alignItems: 'center',
+          borderBottomLeftRadius: headerBorderRadius,
+          borderBottomRightRadius: headerBorderRadius,
+          overflow: 'hidden',
         }}
       >
-        <AnimatedImageBackground
+        <ImageBackground
           source={require('../../assets/crowd.jpg')}
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            position: 'absolute',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomLeftRadius: headerBorderRadius,
-            borderBottomRightRadius: headerBorderRadius,
-            overflow: 'hidden',
-          }}
+          style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
         >
           <Animated.Text
             style={{
-              fontWeight: 'bold',
               fontSize: PROFILE_NAME_FONT_SIZE,
+              fontWeight: 'bold',
               color: 'white',
               marginBottom: -getStatusBarHeight(), // not marginTop: getStatusBarHeight() !!!
               opacity: headerTitleOpacity,
@@ -101,7 +92,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
           >
             Lil Peep
           </Animated.Text>
-        </AnimatedImageBackground>
+        </ImageBackground>
       </Animated.View>
 
       <ScrollView
@@ -126,8 +117,8 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         </Animated.View>
         <Animated.Text
           style={{
-            fontWeight: 'bold',
             fontSize: PROFILE_NAME_FONT_SIZE,
+            fontWeight: 'bold',
             opacity: headerTitleOpacity.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }),
           }}
         >
@@ -135,7 +126,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         </Animated.Text>
 
         {/* DO IGNORE THE SECTION BELOW, IT JUST CHANGES VALUES */}
-        <Slider value={BACK_BUTTON_SIZE} boundaries={[25, 60]} onValueChange={(value) => set_BACK_BUTTON_SIZE(value)}>
+        <Slider value={BACK_BUTTON_SIZE} boundaries={[25, 55]} onValueChange={(value) => set_BACK_BUTTON_SIZE(value)}>
           BACK_BUTTON_SIZE: {BACK_BUTTON_SIZE}
         </Slider>
         <Slider value={SPACING} boundaries={[0, 25]} onValueChange={(value) => set_SPACING(value)}>
@@ -143,7 +134,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         </Slider>
         <Slider
           value={HEADER_MAX_HEIGHT}
-          boundaries={[120, 300]}
+          boundaries={[150, 300]}
           onValueChange={(value) => set_HEADER_MAX_HEIGHT(value)}
         >
           HEADER_MAX_HEIGHT: {HEADER_MAX_HEIGHT}
