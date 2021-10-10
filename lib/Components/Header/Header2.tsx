@@ -119,27 +119,21 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
           Lil Peep
         </Animated.Text>
 
-        {/* DO IGNORE THE SECTION BELOW, IT JUST CHANGES VALUES */}
-        <Slider value={BACK_BUTTON_SIZE} boundaries={[25, 55]} onValueChange={(value) => set_BACK_BUTTON_SIZE(value)}>
+        <Slider value={BACK_BUTTON_SIZE} boundaries={[25, 55]} onValueChange={set_BACK_BUTTON_SIZE}>
           BACK_BUTTON_SIZE: {BACK_BUTTON_SIZE}
         </Slider>
-        <Slider value={SPACING} boundaries={[0, 25]} onValueChange={(value) => set_SPACING(value)}>
+        <Slider value={SPACING} boundaries={[0, 25]} onValueChange={set_SPACING}>
           SPACING: {SPACING}
         </Slider>
-        <Slider value={HEADER_MAX} boundaries={[160, 300]} onValueChange={(value) => set_HEADER_MAX(value)}>
+        <Slider value={HEADER_MAX} boundaries={[160, 300]} onValueChange={set_HEADER_MAX}>
           HEADER_MAX: {HEADER_MAX}
         </Slider>
-        <Slider
-          value={PROFILE_IMAGE_MAX}
-          boundaries={[60, 140]}
-          onValueChange={(value) => set_PROFILE_IMAGE_MAX(value)}
-        >
+        <Slider value={PROFILE_IMAGE_MAX} boundaries={[60, 140]} onValueChange={set_PROFILE_IMAGE_MAX}>
           PROFILE_IMAGE_MAX: {PROFILE_IMAGE_MAX}
         </Slider>
-        <Slider value={PROFILE_IMAGE_MIN} boundaries={[20, 50]} onValueChange={(value) => set_PROFILE_IMAGE_MIN(value)}>
+        <Slider value={PROFILE_IMAGE_MIN} boundaries={[20, 50]} onValueChange={set_PROFILE_IMAGE_MIN}>
           PROFILE_IMAGE_MIN: {PROFILE_IMAGE_MIN}
         </Slider>
-        {/* DO IGNORE THE SECTION ABOVE, IT JUST CHANGES VALUES */}
 
         <Text style={{ marginTop: SPACING, color: 'black' }}>{loremIpsum}</Text>
       </ScrollView>

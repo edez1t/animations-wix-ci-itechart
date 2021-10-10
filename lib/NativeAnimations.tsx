@@ -52,6 +52,6 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
 }
 
 NativeAnimations.options = {
-  topBar: { title: { text: 'Native Animations' } },
+  topBar: { title: { text: 'Animated Animations' } },
   bottomTab: { text: 'ANIMATED' },
 }
