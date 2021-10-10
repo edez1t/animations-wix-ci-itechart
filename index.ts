@@ -6,7 +6,7 @@ import { DragAndRelease } from './lib/Components/DragAndRelease'
 import { HeaderScreen } from './lib/Components/Header'
 import { Opacity } from './lib/Components/Opacity'
 import { SwipeableCards } from './lib/Components/SwipeableCards'
-import { Header2 } from './lib/Components/Header2'
+import { Header2 } from './lib/Components/Header'
 import { NativeAnimations } from './lib/NativeAnimations'
 import { SideMenu } from './lib/SideMenu'
 import { SCREENS } from './lib/screens'
@@ -24,14 +24,16 @@ Navigation.registerComponent('Header2', () => gestureHandlerRootHOC(Header2))
 Navigation.registerComponent('SideMenu', () => gestureHandlerRootHOC(SideMenu))
 
 Navigation.setDefaultOptions({
-  layout: { orientation: ['portrait'] },
-  statusBar: { backgroundColor: 'rebeccapurple' },
+  layout: { orientation: ['portrait'], backgroundColor: '#323232' },
+  statusBar: { backgroundColor: '#171717' },
   topBar: {
     title: { color: 'white' },
     backButton: { color: 'white' },
-    background: { color: 'mediumpurple' },
+    background: { color: '#212121' },
   },
-  bottomTab: { fontWeight: 'bold', textColor: 'mediumpurple', selectedTextColor: 'rebeccapurple' },
+  bottomTab: { fontWeight: 'bold', textColor: '#e0e0e0', selectedTextColor: 'white' },
+  bottomTabs: { backgroundColor: '#212121' },
+  navigationBar: { backgroundColor: '#212121' },
 })
 
 Navigation.setRoot({

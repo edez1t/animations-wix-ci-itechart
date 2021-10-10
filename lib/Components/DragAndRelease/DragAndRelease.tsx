@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
-import { Animated, View, PanResponder, Text } from 'react-native'
+import { Animated, View, PanResponder } from 'react-native'
 import { NavigationFunctionComponent } from 'react-native-navigation'
+import { Text } from '../Text'
 
 export const DragAndRelease: NavigationFunctionComponent = () => {
   const pan = useRef(new Animated.ValueXY()).current
@@ -42,7 +43,7 @@ export const DragAndRelease: NavigationFunctionComponent = () => {
           style={{
             height: 150,
             width: 150,
-            backgroundColor: 'red',
+            backgroundColor: '#bb86fc',
             borderRadius: 75,
           }}
         />

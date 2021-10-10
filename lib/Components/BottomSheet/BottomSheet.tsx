@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Button, useWindowDimensions } from 'react-native'
+import { View, useWindowDimensions } from 'react-native'
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'
 import { NavigationFunctionComponent } from 'react-native-navigation'
 import Animated, {
@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated'
+import { Button } from '../Button'
 
 const springConfig = {
   damping: 80,
@@ -50,11 +51,12 @@ export const BottomSheet: NavigationFunctionComponent = () => {
         }}
       >
         <Button
-          title='open'
           onPress={() => {
             top.value = withSpring(bottomSheetHeight, springConfig)
           }}
-        />
+        >
+          Open
+        </Button>
       </View>
 
       <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -65,7 +67,7 @@ export const BottomSheet: NavigationFunctionComponent = () => {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: 'skyblue',
+              backgroundColor: '#bb86fc',
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
             },

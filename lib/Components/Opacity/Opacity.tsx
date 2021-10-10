@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { Text, TouchableWithoutFeedback, View } from 'react-native'
+import { TouchableWithoutFeedback, View } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { Text } from '../Text'
 
 export type OpacityProps = {
   openedAs: 'modal' | 'stack' | 'side menu'
@@ -41,7 +42,7 @@ export const Opacity: NavigationFunctionComponent<OpacityProps> = ({ openedAs, c
                 borderRadius: 20,
                 width: 200,
                 height: 200,
-                backgroundColor: 'skyblue',
+                backgroundColor: '#bb86fc',
               }}
             />
           </TouchableWithoutFeedback>

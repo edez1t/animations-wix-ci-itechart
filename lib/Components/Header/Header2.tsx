@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react'
-import { Animated, View, Text, ScrollView, TouchableOpacity, Image, ImageBackground, StyleSheet } from 'react-native'
+import { Animated, View, ScrollView, TouchableOpacity, Image, ImageBackground, StyleSheet } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { loremIpsum } from '../../mockData'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import ComunitySlider from '@react-native-community/slider'
+import { Text } from '../Text'
 
 export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   const [BACK_BUTTON_SIZE, set_BACK_BUTTON_SIZE] = useState(35)
@@ -50,7 +51,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
       HEADER_DIFF + PROFILE_IMAGE_MIN + SPACING,
       HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + SPACING,
     ],
-    outputRange: [15, 0],
+    outputRange: [17, 0],
     extrapolate: 'clamp',
   })
 
@@ -70,7 +71,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         }}
       >
         <ImageBackground
-          source={require('../../assets/crowd.jpg')}
+          source={require('../../assets/header.jpg')}
           style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
         >
           <Animated.Text
@@ -105,12 +106,14 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
             marginTop: profileImageMarginTop,
           }}
         >
-          <Image source={require('../../assets/peep.jpg')} style={{ flex: 1, width: null, height: null }} />
+          <Image source={require('../../assets/profile-picture.jpg')} style={{ flex: 1, width: null, height: null }} />
         </Animated.View>
         <Animated.Text
           style={{
             fontSize: PROFILE_NAME_FONT_SIZE,
             fontWeight: 'bold',
+            color: 'white',
+            marginBottom: 20,
             opacity: headerTitleOpacity.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }),
           }}
         >
@@ -186,9 +189,9 @@ const Slider: React.FC<{
         onValueChange={(val) => onValueChange(val)}
         minimumValue={boundaries[0]}
         maximumValue={boundaries[1]}
-        minimumTrackTintColor='red'
-        maximumTrackTintColor='red'
-        thumbTintColor='black'
+        minimumTrackTintColor='#bb86fc'
+        maximumTrackTintColor='#bb86fc'
+        thumbTintColor='#171717'
       />
     </>
   )
