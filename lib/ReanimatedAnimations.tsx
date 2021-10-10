@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
-import { OpacityProps } from './Components/Opacity'
-import { Spacer } from './Components/Spacer'
-import { ReanimataedSpinner } from './Components/Spinner'
-import { Button } from './Components/Button'
-import { Text } from './Components/Text'
+import { OpacityProps } from 'lib/Components/Opacity'
+import { Spacer } from 'lib/Components/Spacer'
+import { ReanimataedSpinner } from 'lib/Components/Spinner'
+import { Button } from 'lib/Components/Button'
+import { Text } from 'lib/Components/Text'
 
 export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
   useEffect(() => {

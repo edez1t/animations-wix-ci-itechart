@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Animated, View, PanResponder } from 'react-native'
 import { NavigationFunctionComponent } from 'react-native-navigation'
-import { Text } from '../Text'
+import { Text } from 'lib/Components/Text'
 
 export const DragAndRelease: NavigationFunctionComponent = () => {
   const pan = useRef(new Animated.ValueXY()).current

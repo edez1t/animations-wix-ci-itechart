@@ -8,7 +8,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated'
-import { Button } from '../Button'
+import { Button } from 'lib/Components/Button'
 
 const springConfig = {
   damping: 80,

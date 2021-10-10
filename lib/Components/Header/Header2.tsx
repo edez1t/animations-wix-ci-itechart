@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { Animated, View, ScrollView, TouchableOpacity, Image, ImageBackground, StyleSheet } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
-import { loremIpsum } from '../../mockData'
+import { loremIpsum } from 'lib/mockData'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import ComunitySlider from '@react-native-community/slider'
-import { Text } from '../Text'
+import { Text } from 'lib/Components/Text'
 
 export const Header2: NavigationFunctionComponent = ({ componentId }) => {
   const [BACK_BUTTON_SIZE, set_BACK_BUTTON_SIZE] = useState(35)

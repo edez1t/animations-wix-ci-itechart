@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { Text } from '../Text'
+import { Text } from 'lib/Components/Text'
 
 export type OpacityProps = {
   openedAs: 'modal' | 'stack' | 'side menu'

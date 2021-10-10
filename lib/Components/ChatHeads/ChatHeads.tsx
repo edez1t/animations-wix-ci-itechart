@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'
 import { NavigationFunctionComponent } from 'react-native-navigation'
-import { colors } from '../../mockData'
+import { colors } from 'lib/mockData'
 
 const HEAD_SIZE = 70
 

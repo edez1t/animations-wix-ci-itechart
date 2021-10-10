@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { View, Animated, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { Text } from '../Text'
+import { Text } from 'lib/Components/Text'
 
 export const Tracking: React.FC = () => {
   const native = useRef(new Animated.Value(0)).current

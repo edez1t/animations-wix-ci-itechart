@@ -12,7 +12,7 @@ import {
   LayoutAnimation,
 } from 'react-native'
 import { NavigationFunctionComponent } from 'react-native-navigation'
-import { colors } from '../../mockData'
+import { colors } from 'lib/mockData'
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {

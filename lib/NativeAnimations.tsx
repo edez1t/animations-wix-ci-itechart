@@ -1,12 +1,12 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
-import { Button } from './Components/Button'
-import { Spacer } from './Components/Spacer'
-import { NativeSpinner } from './Components/Spinner'
-import { Text } from './Components/Text'
-import { Tracking } from './Components/Tracking'
-import { ValueListener } from './Components/ValueListener'
+import { Button } from 'lib/Components/Button'
+import { Spacer } from 'lib/Components/Spacer'
+import { NativeSpinner } from 'lib/Components/Spinner'
+import { Text } from 'lib/Components/Text'
+import { Tracking } from 'lib/Components/Tracking'
+import { ValueListener } from 'lib/Components/ValueListener'
 
 export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) => {
   return (

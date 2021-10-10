@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Animated, TouchableWithoutFeedback, View } from 'react-native'
-import { Text } from '../Text'
+import { Text } from 'lib/Components/Text'
 
 export const ValueListener: React.FC = () => {
   const opacity = useRef(new Animated.Value(1)).current

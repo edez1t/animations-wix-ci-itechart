@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
 import { Animated, View, ScrollView, TouchableOpacity, Image } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
-import { loremIpsum } from '../../mockData'
-import { Text } from '../Text'
+import { loremIpsum } from 'lib/mockData'
+import { Text } from 'lib/Components/Text'
 
 const HEADER_HEIGHT = 60
 
