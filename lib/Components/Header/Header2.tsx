@@ -51,7 +51,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
       HEADER_DIFF + PROFILE_IMAGE_MIN + SPACING,
       HEADER_DIFF + PROFILE_IMAGE_MIN + PROFILE_NAME_FONT_SIZE + SPACING,
     ],
-    outputRange: [17, 0],
+    outputRange: [BACK_BUTTON_SIZE / 2, 0],
     extrapolate: 'clamp',
   })
 
