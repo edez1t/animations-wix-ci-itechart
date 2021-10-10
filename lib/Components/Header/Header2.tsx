@@ -112,7 +112,6 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
           style={{
             fontSize: PROFILE_NAME_FONT_SIZE,
             fontWeight: 'bold',
-            color: 'white',
             marginBottom: 20,
             opacity: headerTitleOpacity.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }),
           }}
@@ -142,7 +141,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
         </Slider>
         {/* DO IGNORE THE SECTION ABOVE, IT JUST CHANGES VALUES */}
 
-        <Text style={{ marginTop: SPACING }}>{loremIpsum}</Text>
+        <Text style={{ marginTop: SPACING, color: 'black' }}>{loremIpsum}</Text>
       </ScrollView>
 
       {/* Back Button */}
@@ -166,6 +165,7 @@ export const Header2: NavigationFunctionComponent = ({ componentId }) => {
 }
 
 Header2.options = {
+  layout: { backgroundColor: 'white' },
   statusBar: {
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
     style: 'light',
@@ -181,7 +181,7 @@ const Slider: React.FC<{
 }> = ({ value, boundaries, onValueChange, children }) => {
   return (
     <>
-      <Text style={{ textAlign: 'center' }}>{children}</Text>
+      <Text style={{ textAlign: 'center', color: 'black' }}>{children}</Text>
       <ComunitySlider
         style={{ flex: 1 }}
         step={1}

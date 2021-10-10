@@ -185,44 +185,51 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
         <Spacer />
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <Button
-            onPress={() =>
-              Navigation.push<OpacityProps>(componentId, {
-                component: {
-                  name: 'Opacity',
-                  options: { topBar: { title: { text: 'Opacity Animation As Stack' } } },
-                  passProps: { openedAs: 'stack' },
-                },
-              })
-            }
-          >
-            stack
-          </Button>
-          <Button
-            onPress={() =>
-              Navigation.showModal({
-                stack: {
-                  children: [
-                    {
-                      component: {
-                        name: 'Opacity',
-                        options: {
-                          topBar: {
-                            title: { text: 'Hardware Back Is Disabled. Use ➡' },
-                            rightButtons: [{ id: 'dismiss', icon: require('./assets/close.png') }],
+          <View style={{ flex: 1 }}>
+            <Button
+              onPress={() =>
+                Navigation.push<OpacityProps>(componentId, {
+                  component: {
+                    name: 'Opacity',
+                    options: { topBar: { title: { text: 'Opacity Animation As Stack' } } },
+                    passProps: { openedAs: 'stack' },
+                  },
+                })
+              }
+            >
+              stack
+            </Button>
+          </View>
+
+          <Spacer />
+
+          <View style={{ flex: 1 }}>
+            <Button
+              onPress={() =>
+                Navigation.showModal({
+                  stack: {
+                    children: [
+                      {
+                        component: {
+                          name: 'Opacity',
+                          options: {
+                            topBar: {
+                              title: { text: 'Hardware Back Is Disabled. Use ➡' },
+                              rightButtons: [{ id: 'dismiss', icon: require('./assets/close.png') }],
+                            },
+                            hardwareBackButton: { dismissModalOnPress: false },
                           },
-                          hardwareBackButton: { dismissModalOnPress: false },
+                          passProps: { openedAs: 'modal' },
                         },
-                        passProps: { openedAs: 'modal' },
                       },
-                    },
-                  ],
-                },
-              })
-            }
-          >
-            modal
-          </Button>
+                    ],
+                  },
+                })
+              }
+            >
+              modal
+            </Button>
+          </View>
         </View>
 
         <Spacer />
