@@ -12,61 +12,68 @@ import { SideMenu } from 'lib/SideMenu'
 import { SCREENS } from 'lib/screens'
 import { ChatHeadsScreen } from 'lib/Components/ChatHeads'
 
-Navigation.registerComponent('ReanimatedAnimations', () => gestureHandlerRootHOC(ReanimatedAnimations))
-Navigation.registerComponent('BottomSheet', () => gestureHandlerRootHOC(BottomSheet))
-Navigation.registerComponent('Opacity', () => gestureHandlerRootHOC(Opacity))
-Navigation.registerComponent('ChatHeads', () => gestureHandlerRootHOC(ChatHeadsScreen))
+const registerScreens = () => {
+  Navigation.registerComponent('ReanimatedAnimations', () => gestureHandlerRootHOC(ReanimatedAnimations))
+  Navigation.registerComponent('BottomSheet', () => gestureHandlerRootHOC(BottomSheet))
+  Navigation.registerComponent('Opacity', () => gestureHandlerRootHOC(Opacity))
+  Navigation.registerComponent('ChatHeads', () => gestureHandlerRootHOC(ChatHeadsScreen))
 
-Navigation.registerComponent('NativeAnimations', () => gestureHandlerRootHOC(NativeAnimations))
-Navigation.registerComponent('DragAndRelease', () => gestureHandlerRootHOC(DragAndRelease))
-Navigation.registerComponent('Header', () => gestureHandlerRootHOC(HeaderScreen))
-Navigation.registerComponent('SwipeableCards', () => gestureHandlerRootHOC(SwipeableCards))
-Navigation.registerComponent('Header2', () => gestureHandlerRootHOC(Header2))
+  Navigation.registerComponent('NativeAnimations', () => gestureHandlerRootHOC(NativeAnimations))
+  Navigation.registerComponent('DragAndRelease', () => gestureHandlerRootHOC(DragAndRelease))
+  Navigation.registerComponent('Header', () => gestureHandlerRootHOC(HeaderScreen))
+  Navigation.registerComponent('SwipeableCards', () => gestureHandlerRootHOC(SwipeableCards))
+  Navigation.registerComponent('Header2', () => gestureHandlerRootHOC(Header2))
 
-Navigation.registerComponent('SideMenu', () => gestureHandlerRootHOC(SideMenu))
+  Navigation.registerComponent('SideMenu', () => gestureHandlerRootHOC(SideMenu))
+}
 
-Navigation.setDefaultOptions({
-  layout: { orientation: ['portrait'], backgroundColor: '#323232' },
-  statusBar: { backgroundColor: '#171717' },
-  topBar: {
-    title: { color: 'white' },
-    backButton: { color: 'white' },
-    background: { color: '#212121' },
-  },
-  bottomTab: { fontWeight: 'bold', textColor: '#e0e0e0', selectedTextColor: 'white' },
-  bottomTabs: { backgroundColor: '#212121' },
-  navigationBar: { backgroundColor: '#212121' },
-})
+const startApp = () => {
+  Navigation.setDefaultOptions({
+    layout: { orientation: ['portrait'], backgroundColor: '#323232' },
+    statusBar: { backgroundColor: '#171717' },
+    topBar: {
+      title: { color: 'white' },
+      backButton: { color: 'white' },
+      background: { color: '#212121' },
+    },
+    bottomTab: { fontWeight: 'bold', textColor: '#e0e0e0', selectedTextColor: 'white' },
+    bottomTabs: { backgroundColor: '#212121' },
+    navigationBar: { backgroundColor: '#212121' },
+  })
 
-Navigation.setRoot({
-  root: {
-    sideMenu: {
-      options: { sideMenu: { left: { enabled: false } } },
-      left: { component: { name: 'SideMenu' } },
-      center: {
-        bottomTabs: {
-          children: [
-            {
-              stack: {
-                children: [
-                  {
-                    component: { id: SCREENS.ReanimatedAnimations, name: 'ReanimatedAnimations' },
-                  },
-                ],
+  Navigation.setRoot({
+    root: {
+      sideMenu: {
+        options: { sideMenu: { left: { enabled: false } } },
+        left: { component: { name: 'SideMenu' } },
+        center: {
+          bottomTabs: {
+            children: [
+              {
+                stack: {
+                  children: [
+                    {
+                      component: { id: SCREENS.ReanimatedAnimations, name: 'ReanimatedAnimations' },
+                    },
+                  ],
+                },
               },
-            },
-            {
-              stack: {
-                children: [
-                  {
-                    component: { name: 'NativeAnimations' },
-                  },
-                ],
+              {
+                stack: {
+                  children: [
+                    {
+                      component: { name: 'NativeAnimations' },
+                    },
+                  ],
+                },
               },
-            },
-          ],
+            ],
+          },
         },
       },
     },
-  },
-})
+  })
+}
+
+registerScreens()
+startApp()
