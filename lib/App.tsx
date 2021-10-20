@@ -11,12 +11,14 @@ import { NativeAnimations } from 'lib/NativeAnimations'
 import { SideMenu } from 'lib/SideMenu'
 import { SCREENS } from 'lib/screens'
 import { ChatHeadsScreen } from 'lib/Components/ChatHeads'
+import { RotateScaleTilt } from './Components/RotateScaleTilt'
 
 const registerScreens = () => {
   Navigation.registerComponent('ReanimatedAnimations', () => gestureHandlerRootHOC(ReanimatedAnimations))
   Navigation.registerComponent('BottomSheet', () => gestureHandlerRootHOC(BottomSheet))
   Navigation.registerComponent('Opacity', () => gestureHandlerRootHOC(Opacity))
   Navigation.registerComponent('ChatHeads', () => gestureHandlerRootHOC(ChatHeadsScreen))
+  Navigation.registerComponent('RotateScaleTilt', () => gestureHandlerRootHOC(RotateScaleTilt))
 
   Navigation.registerComponent('NativeAnimations', () => gestureHandlerRootHOC(NativeAnimations))
   Navigation.registerComponent('DragAndRelease', () => gestureHandlerRootHOC(DragAndRelease))

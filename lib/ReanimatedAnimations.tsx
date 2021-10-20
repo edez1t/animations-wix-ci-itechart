@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { OpacityProps } from 'lib/Components/Opacity'
 import { Spacer } from 'lib/Components/Spacer'
 import { ReanimataedSpinner } from 'lib/Components/Spinner'
 import { Button } from 'lib/Components/Button'
 import { Text } from 'lib/Components/Text'
+import { Wobble } from 'lib/Components/Wobble'
 
 export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId }) => {
   useEffect(() => {
@@ -19,7 +20,7 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
   }, [])
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-between', padding: 10 }}>
+    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'space-between', padding: 10 }}>
       <View>
         <Button onPress={() => Navigation.push(componentId, { component: { name: 'BottomSheet' } })}>
           Bottom Sheet
@@ -92,12 +93,22 @@ export const ReanimatedAnimations: NavigationFunctionComponent = ({ componentId 
 
           <ReanimataedSpinner />
         </View>
+
+        <Spacer />
+
+        <Wobble />
+
+        <Spacer />
+
+        <Button onPress={() => Navigation.push(componentId, { component: { name: 'RotateScaleTilt' } })}>
+          Rotate, Scale & Tilt
+        </Button>
       </View>
 
       <Button onPress={() => Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } })}>
         Open Side Menu
       </Button>
-    </View>
+    </ScrollView>
   )
 }
 

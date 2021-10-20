@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation'
 import { Button } from 'lib/Components/Button'
 import { Spacer } from 'lib/Components/Spacer'
@@ -10,7 +10,7 @@ import { ValueListener } from 'lib/Components/ValueListener'
 
 export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) => {
   return (
-    <View style={{ flex: 1, padding: 10 }}>
+    <ScrollView contentContainerStyle={{ flex: 1, padding: 10 }}>
       <Button onPress={() => Navigation.push(componentId, { component: { name: 'DragAndRelease' } })}>
         Drag And Release
       </Button>
@@ -47,7 +47,7 @@ export const NativeAnimations: NavigationFunctionComponent = ({ componentId }) =
 
       <Text>Animated Tracking</Text>
       <Tracking />
-    </View>
+    </ScrollView>
   )
 }
 
