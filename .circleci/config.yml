@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   node:
-    working_directory: ~/demo-react-native
+    working_directory: ~/animations-wix-ci-itechart
     docker:
       - image: cimg/node:12.16
 
@@ -27,15 +27,25 @@ jobs:
             - node_modules
 
       - run:
-          name: jest tests
+          name: Run jest tests
           command: |
             mkdir -p test-results/jest
             yarn run test
           environment:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
+      - run:
+          name: Run ESlint check
+          command: |
+            mkdir -p test-results/lint
+            yarn run lint
+      - run:
+          name: Run TypeScript check
+          command: |
+            mkdir -p test-results/type-check
+            yarn run type-check
 
       - persist_to_workspace:
-          root: ~/demo-react-native
+          root: ~/animations-wix-ci-itechart
           paths:
             - node_modules
 
@@ -46,7 +56,7 @@ jobs:
           path: test-results
 
   macos-build-and-test:
-    working_directory: ~/demo-react-native
+    working_directory: ~/animations-wix-ci-itechart
     macos:
       xcode: 11.3.0
     environment:
@@ -111,15 +121,15 @@ jobs:
           path: output/scan
 
   android-build-and-test:
-    working_directory: ~/demo-react-native/android
+    working_directory: ~/animations-wix-ci-itechart/android
     docker:
       - image: circleci/android:api-29-node
     steps:
       - checkout:
-          path: ~/demo-react-native
+          path: ~/animations-wix-ci-itechart
 
       - attach_workspace:
-          at: ~/demo-react-native
+          at: ~/animations-wix-ci-itechart
 
       - restore_cache:
           key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
