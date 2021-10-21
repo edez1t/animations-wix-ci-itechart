@@ -27,22 +27,22 @@ jobs:
             - node_modules
 
       - run:
-          name: Run jest tests
+          name: Run TypeScript check
           command: |
-            mkdir -p test-results/jest
-            yarn run test
-          environment:
-            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
+            mkdir -p test-results/type-check
+            yarn type-check
       - run:
           name: Run ESlint check
           command: |
             mkdir -p test-results/lint
-            yarn run lint
+            yarn lint:ci
       - run:
-          name: Run TypeScript check
+          name: Run Jest tests
           command: |
-            mkdir -p test-results/type-check
-            yarn run type-check
+            mkdir -p test-results/jest
+            yarn test
+          environment:
+            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
 
       - persist_to_workspace:
           root: ~/animations-wix-ci-itechart
