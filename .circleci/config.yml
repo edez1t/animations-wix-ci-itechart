@@ -1,4 +1,26 @@
 version: 2.1
+
+commands:
+  - test-js:
+      - steps:
+          - run:
+              name: Run TypeScript check
+              command: |
+                mkdir -p test-results/type-check
+                yarn type-check
+          - run:
+              name: Run ESlint check
+              command: |
+                mkdir -p test-results/lint
+                yarn lint:ci
+          - run:
+              name: Run Jest tests
+              command: |
+                mkdir -p test-results/jest
+                yarn test
+              environment:
+                JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
+
 jobs:
   node:
     working_directory: ~/animations-wix-ci-itechart
@@ -26,23 +48,7 @@ jobs:
           paths:
             - node_modules
 
-      - run:
-          name: Run TypeScript check
-          command: |
-            mkdir -p test-results/type-check
-            yarn type-check
-      - run:
-          name: Run ESlint check
-          command: |
-            mkdir -p test-results/lint
-            yarn lint:ci
-      - run:
-          name: Run Jest tests
-          command: |
-            mkdir -p test-results/jest
-            yarn test
-          environment:
-            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
+      - test-js
 
       - persist_to_workspace:
           root: ~/animations-wix-ci-itechart
@@ -54,3 +60,8 @@ jobs:
 
       - store_artifacts:
           path: test-results
+
+workflows:
+  node:
+    jobs:
+      - node
