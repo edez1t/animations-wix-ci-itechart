@@ -141,16 +141,16 @@ workflows:
 
   test-build-deploy:
     jobs:
-      - build-test-js:
-          filters:
-            branches:
-              ignore:
-                - diawi-android-submission
+      # - build-test-js:
+      #     filters:
+      #       branches:
+      #         ignore:
+      #           - diawi-android-submission
 
       - build-test-app-android:
           filters:
             branches:
               ignore:
                 - diawi-android-submission
-          requires:
-            - build-test-js
+          # requires:
+          #   - build-test-js
