@@ -23,24 +23,31 @@ commands:
   install-node-modules:
     steps:
       - restore_cache:
-          keys:
-            - v1-node_modules-{{ checksum ".manifests/node_modules" }}-{{ arch }}
-      - run:
-          name: Install node modules
-          command: ls node_modules || yarn install
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run: yarn install
+
       - save_cache:
-          key: v1-node_modules-{{ checksum ".manifests/node_modules" }}-{{ arch }}
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
 
   test-js:
     steps:
-      - restore_cache:
-          keys:
-            - v1-jest-{{ .Branch }}
-      - restore_cache:
-          keys:
-            - v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
+      # - restore_cache:
+      #     keys:
+      #       - v1-jest-{{ .Branch }}
+      # - restore_cache:
+      #     keys:
+      #       - v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
       - run:
           name: Run TypeScript check
           command: ls test-results.json || yarn type-check
@@ -50,16 +57,16 @@ commands:
       - run:
           name: Run Jest tests
           command: ls test-results.json || yarn jest --outputFile test-results.json --json --ci
-      - save_cache:
-          key: v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
-          paths:
-            - test-results.json
-      - save_cache:
-          key: v1-jest-{{ .Branch }}
-          paths:
-            - .jest
+      # - save_cache:
+      #     key: v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
+      #     paths:
+      #       - test-results.json
+      # - save_cache:
+      #     key: v1-jest-{{ .Branch }}
+      #     paths:
+      #       - .jest
 
-  prep-android-env:
+  prepare-android-env:
     steps:
       - attach_workspace:
           at: ../workspace
@@ -103,12 +110,10 @@ jobs:
       - test-js
 
   build-test-app-android:
-    environment:
-      BUNDLE_PATH: vendor/bundle
     docker:
       - image: circleci/android:api-29-node
     steps:
-      - prep-android-env
+      - prepare-android-env
       - build-app-android
       - run:
           name: Save success file
@@ -131,7 +136,7 @@ jobs:
   #         name: Setup
   #         command: ./scripts/setup-distribute-linux
   #     - run:
-  #         name: Promote if diawi_android_submission
+  #         name: Promote if diawi-android-submission
   #         command: ./scripts/promote-if-playstore-submission-branch
 
 workflows:
@@ -145,12 +150,12 @@ workflows:
           filters:
             branches:
               ignore:
-                - diawi_android_submission
+                - diawi-android-submission
 
       - build-test-app-android:
           filters:
             branches:
               ignore:
-                - diawi_android_submission
+                - diawi-android-submission
           requires:
             - build-test-js
