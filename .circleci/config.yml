@@ -50,10 +50,10 @@ commands:
       #       - v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
       - run:
           name: Run TypeScript check
-          command: ls test-results.json || yarn type-check
+          command: yarn type-check
       - run:
           name: Run ESLint check
-          command: ls test-results.json || yarn lint:ci
+          command: yarn lint:ci
       - run:
           name: Run Jest tests
           command: ls test-results.json || yarn jest --outputFile test-results.json --json --ci
