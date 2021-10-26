@@ -1,62 +1,156 @@
 version: 2.1
 
-jobs:
-  node:
-    working_directory: ~/animations-wix-ci-itechart
-    docker:
-      - image: cimg/node:12.16
+orbs:
+  node: circleci/node@4.7.0
 
+commands:
+  install-node:
     steps:
-      - checkout
+      - run:
+          name: Install Node 14 (Required for Yarn)
+          command: |
+            set +e
+            touch $BASH_ENV
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+            echo "HOMEBREW_NO_AUTO_UPDATE=1" >> $BASH_ENV
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo 'nvm install v14.17.1' >> $BASH_ENV
+            echo 'nvm alias default v14.17.1' >> $BASH_ENV
+            sudo mkdir ~/.config
+            sudo chown -R $USER:$GROUP ~/.config
 
+  install-node-modules:
+    steps:
       - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-
-      - run: yarn install
-
+          keys:
+            - v1-node_modules-{{ checksum ".manifests/node_modules" }}-{{ arch }}
+      - run:
+          name: Install node modules
+          command: ls node_modules || yarn install
       - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          key: v1-node_modules-{{ checksum ".manifests/node_modules" }}-{{ arch }}
           paths:
             - node_modules
 
+  test-js:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-jest-{{ .Branch }}
+      - restore_cache:
+          keys:
+            - v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
       - run:
           name: Run TypeScript check
-          command: |
-            mkdir -p test-results/type-check
-            yarn type-check
+          command: ls test-results.json || yarn type-check
       - run:
-          name: Run ESlint check
-          command: |
-            mkdir -p test-results/lint
-            yarn lint:ci
+          name: Run ESLint check
+          command: ls test-results.json || yarn lint:ci
       - run:
           name: Run Jest tests
-          command: |
-            mkdir -p test-results/jest
-            yarn test
-          environment:
-            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
-
-      - persist_to_workspace:
-          root: ~/animations-wix-ci-itechart
+          command: ls test-results.json || yarn jest --outputFile test-results.json --json --ci
+      - save_cache:
+          key: v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
           paths:
-            - node_modules
+            - test-results.json
+      - save_cache:
+          key: v1-jest-{{ .Branch }}
+          paths:
+            - .jest
 
-      - store_test_results:
-          path: test-results
+  prep-android-env:
+    steps:
+      - attach_workspace:
+          at: ../workspace
+      - run:
+          name: Clear project dir
+          command: |
+            rm -rf /Users/distiller/project
+      - checkout
+      - attach_workspace:
+          at: .
+      - install-node
+      - install-node-modules
 
-      - store_artifacts:
-          path: test-results
+  build-app-android:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-app_build_android-{{ checksum ".manifests/app_build" }}
+      - run:
+          name: Build App
+          command: |
+            cd android
+            touch android/app/src/main/assets/index.android.bundle && yarn bundle:android
+            ./gradlew clean
+            ./gradlew bundleRelease
+            cd -
+      - save_cache:
+          key: v1-app_build_android-{{ checksum ".manifests/app_build" }}
+          paths:
+            - android/build
+            - android/app/build
+
+jobs:
+  build-test-js:
+    executor:
+      name: node/default
+      tag: '14.17.1'
+    steps:
+      - checkout
+      - install-node-modules
+      - test-js
+
+  build-test-app-android:
+    environment:
+      BUNDLE_PATH: vendor/bundle
+    docker:
+      - image: circleci/android:api-29-node
+    steps:
+      - prep-android-env
+      - build-app-android
+      - run:
+          name: Save success file
+          command: echo yes > 'build-success.log'
+      - save_cache:
+          key: v1-test-success-{{ checksum "../workspace/.manifests/android_native" }}
+          paths:
+            - build-success.log
+
+  # promote-android-to-diawi:
+  #   environment:
+  #     BUNDLE_PATH: vendor/bundle
+
+  #   docker:
+  #     - image: circleci/android:api-29-node
+
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Setup
+  #         command: ./scripts/setup-distribute-linux
+  #     - run:
+  #         name: Promote if diawi_android_submission
+  #         command: ./scripts/promote-if-playstore-submission-branch
 
 workflows:
-  node:
+  version: 2
+
+  #  promote here
+
+  test-build-deploy:
     jobs:
-      - node
+      - build-test-js:
+          filters:
+            branches:
+              ignore:
+                - diawi_android_submission
+
+      - build-test-app-android:
+          filters:
+            branches:
+              ignore:
+                - diawi_android_submission
+          requires:
+            - build-test-js
