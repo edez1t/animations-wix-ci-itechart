@@ -89,12 +89,9 @@ commands:
           name: Build App
           command: |
             cd android 
-            chmod +x gradlew 
-            mkdir -p app/src/main/assets 
-            touch app/src/main/assets/index.android.bundle 
-            yarn bundle:android 
+            chmod +x gradlew
             ./gradlew clean 
-            ./gradlew bundleRelease 
+            ./gradlew assembleRelease 
             cd -
       # - save_cache:
       #     key: v1-app_build_android-{{ checksum ".manifests/app_build" }}
