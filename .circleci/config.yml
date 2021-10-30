@@ -97,6 +97,8 @@ jobs:
       - build-app-android
 
   promote-android-to-diawi:
+    docker:
+      - image: circleci/android:api-29-node
     steps:
       - checkout
       - run:
