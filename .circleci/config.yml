@@ -7,7 +7,7 @@ commands:
   install-node:
     steps:
       - run:
-          name: Install Node 14 (Required for Yarn)
+          name: Install Node 14
           command: |
             set +e
             touch $BASH_ENV
@@ -42,12 +42,6 @@ commands:
 
   test-js:
     steps:
-      # - restore_cache:
-      #     keys:
-      #       - v1-jest-{{ .Branch }}
-      # - restore_cache:
-      #     keys:
-      #       - v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
       - run:
           name: Run TypeScript check
           command: yarn type-check
@@ -56,15 +50,7 @@ commands:
           command: yarn lint:ci
       - run:
           name: Run Jest tests
-          command: ls test-results.json || yarn jest --outputFile test-results.json --json --ci
-      # - save_cache:
-      #     key: v1-js_test_results-{{ checksum ".manifests/js_test_results" }}
-      #     paths:
-      #       - test-results.json
-      # - save_cache:
-      #     key: v1-jest-{{ .Branch }}
-      #     paths:
-      #       - .jest
+          command: yarn jest --ci
 
   prepare-android-env:
     steps:
@@ -82,9 +68,6 @@ commands:
 
   build-app-android:
     steps:
-      # - restore_cache:
-      #     keys:
-      #       - v1-app_build_android-{{ checksum ".manifests/app_build" }}
       - run:
           name: Build App
           command: |
@@ -92,12 +75,9 @@ commands:
             chmod +x gradlew
             ./gradlew clean 
             ./gradlew assembleRelease 
+            mkdir /tmp/artifacts
+            cp app/build/outputs/apk/release/app-universal-release.apk /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
             cd -
-      # - save_cache:
-      #     key: v1-app_build_android-{{ checksum ".manifests/app_build" }}
-      #     paths:
-      #       - android/build
-      #       - android/app/build
 
 jobs:
   build-test-js:
@@ -115,47 +95,27 @@ jobs:
     steps:
       - prepare-android-env
       - build-app-android
-      - run:
-          name: Save success file
-          command: echo yes > 'build-success.log'
-      - save_cache:
-          key: v1-test-success-{{ checksum "../workspace/.manifests/android_native" }}
-          paths:
-            - build-success.log
 
-  # promote-android-to-diawi:
-  #   environment:
-  #     BUNDLE_PATH: vendor/bundle
-
-  #   docker:
-  #     - image: circleci/android:api-29-node
-
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Setup
-  #         command: ./scripts/setup-distribute-linux
-  #     - run:
-  #         name: Promote if diawi-android-submission
-  #         command: ./scripts/promote-if-playstore-submission-branch
+  promote-android-to-diawi:steps:
+    - checkout
+    - run:
+        name: Upload APK to Diawi
+        command: |
+          curl https://upload.diawi.com/ -F token=$DIAWI_TOKEN -F file=@/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk -F callback_emails=$DIAWI_CALLBACK_EMAIL
 
 workflows:
   version: 2
 
-  #  promote here
-
   test-build-deploy:
     jobs:
-      # - build-test-js:
-      #     filters:
-      #       branches:
-      #         ignore:
-      #           - diawi-android-submission
+      - build-test-js
 
       - build-test-app-android:
+          requires:
+            - build-test-js
+
+      - promote-android-to-diawi:
           filters:
             branches:
-              ignore:
+              only:
                 - diawi-android-submission
-          # requires:
-          #   - build-test-js
