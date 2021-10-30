@@ -102,7 +102,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Upload APK to Diawi (diawi-android-submission branch only)
+          name: Upload APK to Diawi
           command: |
             curl https://upload.diawi.com/ -F token=$DIAWI_TOKEN -F file=@android/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk -F callback_emails=$DIAWI_CALLBACK_EMAIL
 
@@ -111,17 +111,16 @@ workflows:
 
   test-build-deploy:
     jobs:
-      # - build-test-js
+      - build-test-js
 
-      - build-test-app-android
-      # :
-      #     requires:
-      #       - build-test-js
+      - build-test-app-android:
+          requires:
+            - build-test-js
 
       - promote-android-to-diawi:
-          # requires:
-          #     - build-test-app-android
-          #     - build-test-js
+          requires:
+            - build-test-app-android
+            - build-test-js
           filters:
             branches:
               only:
