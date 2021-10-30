@@ -74,10 +74,10 @@ commands:
             cd android 
             chmod +x gradlew
             ./gradlew clean 
-            ./gradlew assembleRelease 
-            mkdir /tmp/artifacts
-            cp app/build/outputs/apk/release/app-universal-release.apk /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
+            ./gradlew assembleRelease   
             cd -
+            mkdir /tmp/artifacts
+            cp android/app/build/outputs/apk/release/app-universal-release.apk /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
 
 jobs:
   build-test-js:
@@ -102,22 +102,26 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Upload APK to Diawi
+          name: Upload APK to Diawi (diawi-android-submission branch only)
           command: |
-            curl https://upload.diawi.com/ -F token=$DIAWI_TOKEN -F file=@/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk -F callback_emails=$DIAWI_CALLBACK_EMAIL
+            curl https://upload.diawi.com/ -F token=$DIAWI_TOKEN -F file=@android/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk -F callback_emails=$DIAWI_CALLBACK_EMAIL
 
 workflows:
   version: 2
 
   test-build-deploy:
     jobs:
-      - build-test-js
+      # - build-test-js
 
-      - build-test-app-android:
-          requires:
-            - build-test-js
+      - build-test-app-android
+      # :
+      #     requires:
+      #       - build-test-js
 
       - promote-android-to-diawi:
+          # requires:
+          #     - build-test-app-android
+          #     - build-test-js
           filters:
             branches:
               only:
