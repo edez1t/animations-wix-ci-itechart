@@ -121,7 +121,6 @@ workflows:
       - promote-android-to-diawi:
           requires:
             - build-test-app-android
-            - build-test-js
           filters:
             branches:
               only:
