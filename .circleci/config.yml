@@ -78,8 +78,6 @@ commands:
             cd ..
             mkdir /tmp/artifacts
             cp android/app/build/outputs/apk/release/app-universal-release.apk /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
-      - store_artifacts:
-          path: /tmp/artifacts
 
 jobs:
   build-test-js:
@@ -106,6 +104,8 @@ jobs:
           name: Upload APK to Diawi
           command: |
             curl https://upload.diawi.com/ -F token=$DIAWI_TOKEN -F file=@tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk -F callback_emails=$DIAWI_CALLBACK_EMAIL
+      - store_artifacts:
+          path: /tmp/artifacts
 
 workflows:
   version: 2
