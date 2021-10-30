@@ -97,8 +97,9 @@ jobs:
       - build-app-android
 
   promote-android-to-diawi:steps:
-    - checkout
-    - run:
+    steps:
+      - checkout
+      - run:
         name: Upload APK to Diawi
         command: |
           curl https://upload.diawi.com/ -F token=$DIAWI_TOKEN -F file=@/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk -F callback_emails=$DIAWI_CALLBACK_EMAIL
