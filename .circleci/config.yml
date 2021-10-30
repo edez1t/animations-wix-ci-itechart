@@ -78,6 +78,8 @@ commands:
             cd ..
             mkdir /tmp/artifacts
             cp android/app/build/outputs/apk/release/app-universal-release.apk /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
+      - store_artifacts:
+          path: /tmp/artifacts
 
 jobs:
   build-test-js:
