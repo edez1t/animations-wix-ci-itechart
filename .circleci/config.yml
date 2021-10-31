@@ -68,6 +68,8 @@ commands:
 
   build-app-android:
     steps:
+      - restore_cache:
+          key: v1-gradle-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
           name: Build App
           command: |
@@ -78,6 +80,10 @@ commands:
             cd ..
             mkdir /tmp/artifacts
             cp android/app/build/outputs/apk/release/app-universal-release.apk /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
+      - save_cache:
+          paths:
+            - ~/android/.gradle
+          key: v1-gradle-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
 jobs:
   build-test-js:
