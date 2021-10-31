@@ -100,12 +100,9 @@ jobs:
     docker:
       - image: circleci/android:api-29-node
     steps:
-      - checkout
       - run:
           name: Upload APK to Diawi
           command: |
-            mkdir /tmp/artifacts
-            cp lib/App.tsx /tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
             curl https://upload.diawi.com/ -i -X POST -H "Content-Type: multipart/form-data" -F token=$DIAWI_TOKEN -F file=@/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
       - store_artifacts:
           path: /tmp/artifacts
@@ -117,13 +114,14 @@ workflows:
     jobs:
       # - build-test-js
 
-      # - build-test-app-android:
+      - build-test-app-android
+      # :
       #     requires:
       #       - build-test-js
 
       - promote-android-to-diawi:
-          # requires:
-          #   - build-test-app-android
+          requires:
+            - build-test-app-android
           filters:
             branches:
               only:
