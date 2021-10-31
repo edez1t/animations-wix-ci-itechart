@@ -52,6 +52,20 @@ commands:
           name: Run Jest tests
           command: yarn jest --ci
 
+  prepare-android-env:
+    steps:
+      - attach_workspace:
+          at: ../workspace
+      - run:
+          name: Clear project dir
+          command: |
+            rm -rf /Users/distiller/project
+      - checkout
+      - attach_workspace:
+          at: .
+      - install-node
+      - install-node-modules
+
   build-app-android:
     steps:
       - run:
@@ -79,8 +93,7 @@ jobs:
     docker:
       - image: circleci/android:api-29-node
     steps:
-      - install-node
-      - install-node-modules
+      - prepare-android-env
       - build-app-android
 
   promote-android-to-diawi:
