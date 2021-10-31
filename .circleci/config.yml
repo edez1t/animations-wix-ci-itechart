@@ -75,7 +75,6 @@ commands:
           command: |
             cd android
             chmod +x gradlew
-            ./gradlew clean
             ./gradlew assembleRelease
             cd ..
             mkdir /tmp/artifacts
@@ -120,16 +119,15 @@ workflows:
 
   test-build-deploy:
     jobs:
-      # - build-test-js
+      - build-test-js
 
-      # - build-test-app-android
-      # :
-      #     requires:
-      #       - build-test-js
+      - build-test-app-android:
+          requires:
+            - build-test-js
 
       - promote-android-to-diawi:
-          # requires:
-          #   - build-test-app-android
+          requires:
+            - build-test-app-android
           filters:
             branches:
               only:
