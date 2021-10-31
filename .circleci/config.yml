@@ -69,7 +69,7 @@ commands:
   build-app-android:
     steps:
       - restore_cache:
-          key: v1-gradle-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum "android/app/build.gradle" }}
       - run:
           name: Build App
           command: |
@@ -83,7 +83,7 @@ commands:
       - save_cache:
           paths:
             - ~/android/.gradle
-          key: v1-gradle-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum "android/app/build.gradle" }}
 
 jobs:
   build-test-js:
