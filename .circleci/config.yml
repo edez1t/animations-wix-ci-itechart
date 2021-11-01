@@ -66,7 +66,7 @@ commands:
           name: Build App
           command: |
             cd android
-            mkdir -p app/src/main/assets && yarn bundle:android
+            touch android/app/src/main/assets/index.android.bundle && yarn bundle:android
             chmod +x gradlew
             ./gradlew assembleRelease -x bundleReleaseJsAndAssets
             cd ..
