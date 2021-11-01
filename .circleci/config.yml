@@ -101,6 +101,13 @@ jobs:
     steps:
       - prepare-android-env
       - build-app-android
+      - run:
+          name: Quit early if current branch != diawi-android-submission
+          command: |
+            if test $CIRCLE_BRANCH != diawi-android-submission
+            then
+              circleci step halt
+            fi
       - promote-android-to-diawi
 
 workflows:
