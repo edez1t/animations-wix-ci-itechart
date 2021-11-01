@@ -50,19 +50,11 @@ commands:
           command: yarn lint:ci
       - run:
           name: Run Jest tests
-          command: yarn jest --ci
+          command: yarn test
 
   prepare-android-env:
     steps:
-      - attach_workspace:
-          at: ../workspace
-      - run:
-          name: Clear project dir
-          command: |
-            rm -rf /Users/distiller/project
       - checkout
-      - attach_workspace:
-          at: .
       - install-node
       - install-node-modules
 
@@ -84,6 +76,15 @@ commands:
             - ~/android/.gradle
           key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum "android/app/build.gradle" }}
 
+  promote-android-to-diawi:
+    steps:
+      - run:
+          name: Upload APK to Diawi
+          command: |
+            curl https://upload.diawi.com/ -i -X POST -H "Content-Type: multipart/form-data" -F token=$DIAWI_TOKEN -F file=@/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
+      - store_artifacts:
+          path: /tmp/artifacts
+
 jobs:
   build-test-js:
     executor:
@@ -100,19 +101,7 @@ jobs:
     steps:
       - prepare-android-env
       - build-app-android
-
-  promote-android-to-diawi:
-    docker:
-      - image: circleci/android:api-29-node
-    steps:
-      - prepare-android-env
-      - build-app-android
-      - run:
-          name: Upload APK to Diawi
-          command: |
-            curl https://upload.diawi.com/ -i -X POST -H "Content-Type: multipart/form-data" -F token=$DIAWI_TOKEN -F file=@/tmp/artifacts/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BUILD_NUM}.apk
-      - store_artifacts:
-          path: /tmp/artifacts
+      - promote-android-to-diawi
 
 workflows:
   version: 2
@@ -124,11 +113,3 @@ workflows:
       - build-test-app-android:
           requires:
             - build-test-js
-
-      - promote-android-to-diawi:
-          requires:
-            - build-test-app-android
-          filters:
-            branches:
-              only:
-                - diawi-android-submission
